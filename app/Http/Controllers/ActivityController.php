@@ -16,6 +16,7 @@ class ActivityController extends Controller
     // Display a listing of activities
     public function index()
     {
+        $this->authorize('viewAny', Activity::class);
         $activities = Activity::with('images')->get();
         return view('admin.activities.index', compact('activities'));
     }
@@ -23,6 +24,7 @@ class ActivityController extends Controller
     // Show the form for creating a new activity
     public function create()
     {
+        $this->authorize('create', Activity::class);
         $staffs = Staff::all();
         $projects = Project::all();
         $clients = Client::all();
@@ -32,7 +34,7 @@ class ActivityController extends Controller
     // Store a newly created activity in storage
     public function store(Request $request)
     {
-
+        $this->authorize('create', Activity::class);
         $request->validate([
             'description' => 'nullable|string',
             'activity_type' => 'nullable|in:meeting,call,email,task,other',
@@ -63,6 +65,7 @@ class ActivityController extends Controller
     // Show the form for editing the specified activity
     public function edit(Activity $activity)
     {
+        $this->authorize('update', $activity);
         $staffs = Staff::all();
         $clients = Client::all();
         $projects = Project::all();
@@ -77,6 +80,7 @@ class ActivityController extends Controller
     // Update the specified activity in storage
     public function update(Request $request, Activity $activity)
     {
+        $this->authorize('update', $activity);
         $request->validate([
             'description' => 'nullable|string',
             'activity_type' => 'required|in:meeting,call,email,task,other',
@@ -106,6 +110,7 @@ class ActivityController extends Controller
     // Remove the specified activity from storage
     public function destroy(Activity $activity)
     {
+        $this->authorize('delete', $activity);
         // Delete associated images
         foreach ($activity->images as $image) {
             Storage::delete($image->image);
@@ -119,6 +124,7 @@ class ActivityController extends Controller
     // Show the details of a specific activity
     public function show(Activity $activity)
     {
+        $this->authorize('view', $activity);
         return view('admin.activities.show', compact('activity'));
     }
 }
