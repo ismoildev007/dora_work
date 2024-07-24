@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\ManagerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\StaffController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,11 +25,15 @@ Route::delete('activity-images/{activityImage}', [ActivityController::class, 'de
 Route::resource('clients', ClientController::class);
 Route::resource('managers', ManagerController::class);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('messages', MessageController::class);
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::resource('staffs', StaffController::class);
+
+Route::resource('projects', ProjectController::class);
+
+
+
+Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
