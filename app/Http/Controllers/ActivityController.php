@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use App\Models\ActivityImage;
+use App\Models\Staff;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,7 +21,8 @@ class ActivityController extends Controller
     // Show the form for creating a new activity
     public function create()
     {
-        return view('admin.activities.create');
+        $staffs = Staff::all();
+        return view('admin.activities.create', compact('staffs'));
     }
 
     // Store a newly created activity in storage
