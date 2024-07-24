@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Manager;
 use App\Models\Staff;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class StaffController extends Controller
@@ -17,7 +19,12 @@ class StaffController extends Controller
     // Show the form for creating a new resource.
     public function create()
     {
-        return view('admin.staff.create');
+        $managers = Manager::all();
+        $users = User::where('role', 'staff')->get();
+        return view('admin.staff.create', compact([
+            'managers',
+            'users'
+        ]));
     }
 
     // Store a newly created resource in storage.
@@ -38,7 +45,13 @@ class StaffController extends Controller
     // Show the form for editing the specified resource.
     public function edit(Staff $staff)
     {
-        return view('admin.staff.edit', compact('staff'));
+        $managers = Staff::all();
+        $users = User::all();
+        return view('admin.staff.edit', compact(
+            'staff',
+            'managers',
+            'users'
+        ));
     }
 
     // Update the specified resource in storage.

@@ -22,8 +22,8 @@
             @foreach($staffs as $staff)
                 <tr>
                     <td>{{ $staff->id }}</td>
-                    <td>{{ $staff->user_id }}</td>
-                    <td>{{ $staff->manager_id }}</td>
+                    <td>{{ $staff->user->name }}</td>
+                    <td>{{ $staff->manager->department }}</td>
                     <td>{{ $staff->position }}</td>
                     <td>{{ $staff->phone_number }}</td>
                     <td>
