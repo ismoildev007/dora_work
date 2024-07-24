@@ -7,59 +7,61 @@ use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $messages = Message::with('conversation', 'sender')->get();
+        return view('admin.messages.index', compact('messages'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.messages.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'conversation_id' => 'required|exists:conversations,id',
+            'sender_id' => 'required|exists:users,id',
+            'content' => 'required',
+        ]);
+
+        Message::create($request->all());
+
+        return redirect()->route('messages.index')->with('success', 'Message created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Message $message)
+    public function show($id)
     {
-        //
+        $message = Message::with('conversation', 'sender')->findOrFail($id);
+        return view('admin.messages.show', compact('message'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Message $message)
+    public function edit($id)
     {
-        //
+        $message = Message::findOrFail($id);
+        return view('admin.messages.edit', compact('message'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Message $message)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'conversation_id' => 'required|exists:conversations,id',
+            'sender_id' => 'required|exists:users,id',
+            'content' => 'required',
+        ]);
+
+        $message = Message::findOrFail($id);
+        $message->update($request->all());
+
+        return redirect()->route('messages.index')->with('success', 'Message updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Message $message)
+    public function destroy($id)
     {
-        //
+        $message = Message::findOrFail($id);
+        $message->delete();
+
+        return redirect()->route('messages.index')->with('success', 'Message deleted successfully.');
     }
 }

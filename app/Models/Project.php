@@ -36,4 +36,8 @@ class Project extends Model
     {
         return $this->hasMany(Activity::class, 'project_id', 'id');
     }
+    public function images()
+    {
+        return $this->hasMany(ProjectImage::class, 'project_id', 'id');
+    }
 }

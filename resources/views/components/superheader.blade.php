@@ -109,27 +109,21 @@
                     </a>
                 </li>
             @endcan
-            @can('view-notification')
             <li class="menu-item">
-                <a href="{{ route('notifications.index') }}" class="menu-link">
-                    <span class="menu-text">Notifications</span>
+                <a href="{{ route('messages.index') }}" class="menu-link">
+                    <span class="menu-text">Message</span>
                 </a>
             </li>
-            @endcan
-            @can('view-project')
             <li class="menu-item">
                 <a href="{{ route('projects.index') }}" class="menu-link">
                     <span class="menu-text">Projects</span>
                 </a>
             </li>
-            @endcan
-            @can('view-status')
             <li class="menu-item">
-                <a href="{{ route('statuses.index') }}" class="menu-link">
-                    <span class="menu-text">Status</span>
+                <a href="{{ route('staffs.index') }}" class="menu-link">
+                    <span class="menu-text">Staff</span>
                 </a>
             </li>
-            @endcan
             @can('view-work')
             <li class="menu-item">
                 <a href="{{ route('works.index') }}" class="menu-link">

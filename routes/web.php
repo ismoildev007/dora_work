@@ -1,8 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\StaffController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,11 +21,15 @@ use App\Http\Controllers\UserController;
 
 Route::resource('users', UserController::class);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('messages', MessageController::class);
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::resource('staffs', StaffController::class);
+
+Route::resource('projects', ProjectController::class);
+
+
+
+Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
