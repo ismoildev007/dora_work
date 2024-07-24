@@ -37,7 +37,10 @@
         <div class="form-group">
             <label for="staff_id">Staff</label>
             <select name="staff_id" id="staff_id" class="form-control">
-                <!-- Populate staff options here -->
+                @foreach($staffs as $staff)
+                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                @endforeach
+
             </select>
         </div>
         <div class="form-group">

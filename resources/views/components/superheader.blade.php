@@ -72,7 +72,12 @@
             {{-- </ul>--}}
             {{-- </div>--}}
             {{-- </li>--}}
-
+            <li class="menu-item">
+                <a href="{{ route('users.index') }}" class="menu-link waves-effect waves-light">
+                    <span class="menu-icon"><i class="bx bx-user"></i></span>
+                    <span class="menu-text"> Users </span>
+                </a>
+            </li>
             <li class="menu-item">
                 <a href="{{ route('activities.index') }}" class="menu-link waves-effect waves-light">
                     <span class="menu-icon"><i class="bx bx-calendar"></i></span>
@@ -87,12 +92,8 @@
                 </a>
             </li>
 
-            <li class="menu-item">
-                <a href="{{ route('managers.index') }}" class="menu-link waves-effect waves-light">
-                    <span class="menu-icon"><i class="bx bx-calendar"></i></span>
-                    <span class="menu-text"> Manager </span>
-                </a>
-            </li>
+            
+            
 
             @can('view-amount')
             <li class="menu-item">
