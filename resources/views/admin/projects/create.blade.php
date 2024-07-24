@@ -35,7 +35,6 @@
             <div class="form-group">
                 <label for="client_id">Client</label>
                 <select name="client_id" class="form-control" id="client_id">
-                    <option value="">Select Client</option>
                     @foreach($clients as $client)
                         <option value="{{ $client->id }}">{{ $client->name }}</option>
                     @endforeach
@@ -44,7 +43,6 @@
             <div class="form-group">
                 <label for="manager_id">Manager</label>
                 <select name="manager_id" class="form-control" id="manager_id">
-                    <option value="">Select Manager</option>
                     @foreach($managers as $manager)
                         <option value="{{ $manager->id }}">{{ $manager->name }}</option>
                     @endforeach

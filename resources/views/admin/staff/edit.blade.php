@@ -7,12 +7,24 @@
             @csrf
             @method('PUT')
             <div class="form-group">
-                <label for="user_id">User ID</label>
-                <input type="number" name="user_id" class="form-control" id="user_id" value="{{ $staff->user_id }}" required>
+                <label for="user_id">User</label>
+                <select name="user_id" class="form-control" id="user_id" required>
+                    @foreach($users as $user)
+                        <option value="{{ $user->id }}" {{ $user->id == $staff->user_id ? 'selected' : '' }}>
+                            {{ $user->name }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
-                <label for="manager_id">Manager ID</label>
-                <input type="number" name="manager_id" class="form-control" id="manager_id" value="{{ $staff->manager_id }}">
+                <label for="manager_id">Manager</label>
+                <select name="manager_id" class="form-control" id="manager_id">
+                    @foreach($managers as $manager)
+                        <option value="{{ $manager->id }}" {{ $manager->id == $staff->manager_id ? 'selected' : '' }}>
+                            {{ $manager->department }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label for="position">Position</label>

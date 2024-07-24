@@ -6,12 +6,20 @@
         <form action="{{ route('staffs.store') }}" method="POST">
             @csrf
             <div class="form-group">
-                <label for="user_id">User ID</label>
-                <input type="number" name="user_id" class="form-control" id="user_id" required>
+                <label for="manager_id">User</label>
+                <select name="user_id" class="form-control" id="manager_id">
+                    @foreach($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
-                <label for="manager_id">Manager ID</label>
-                <input type="number" name="manager_id" class="form-control" id="manager_id">
+                <label for="manager_id">Manager</label>
+                <select name="manager_id" class="form-control" id="manager_id">
+                    @foreach($managers as $manager)
+                        <option value="{{ $manager->id }}">{{ $manager->user->name }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label for="position">Position</label>
