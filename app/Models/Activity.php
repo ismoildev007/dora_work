@@ -35,4 +35,10 @@ class Activity extends Model
     {
         return $this->belongsTo(Project::class, 'project_id', 'id');
     }
+
+    // Relationship with ActivityImages (one-to-many)
+    public function images()
+    {
+        return $this->hasMany(ActivityImage::class, 'activity_id', 'id');
+    }
 }

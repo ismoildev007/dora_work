@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ManagerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 /*
@@ -15,6 +18,10 @@ use App\Http\Controllers\UserController;
 */
 
 Route::resource('users', UserController::class);
+Route::resource('activities', ActivityController::class);
+Route::delete('activity-images/{activityImage}', [ActivityController::class, 'destroyImage'])->name('activity-images.destroy');
+Route::resource('clients', ClientController::class);
+Route::resource('managers', ManagerController::class);
 
 Route::get('/', function () {
     return view('welcome');
