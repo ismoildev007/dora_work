@@ -22,18 +22,6 @@ use App\Http\Controllers\StaffController;
 |
 */
 
-Route::resource('users', UserController::class);
-Route::resource('activities', ActivityController::class);
-Route::delete('activity-images/{activityImage}', [ActivityController::class, 'destroyImage'])->name('activity-images.destroy');
-Route::resource('clients', ClientController::class);
-Route::resource('managers', ManagerController::class);
-
-Route::resource('messages', MessageController::class);
-
-Route::resource('staffs', StaffController::class);
-
-Route::resource('projects', ProjectController::class);
-
 
 
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
@@ -45,4 +33,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/manager', [AuthController::class, 'managerDashboard'])->name('manager.dashboard');
     Route::get('/admin', [AuthController::class, 'adminDashboard'])->name('admin.dashboard');
     Route::get('/staff', [AuthController::class, 'staffDashboard'])->name('staff.dashboard');
+    Route::resource('users', UserController::class);
+    Route::resource('activities', ActivityController::class);
+    Route::delete('activity-images/{activityImage}', [ActivityController::class, 'destroyImage'])->name('activity-images.destroy');
+    Route::delete('project-images/{project}', [ProjectController::class, 'destroyImage'])->name('project-images.destroy');
+    Route::resource('clients', ClientController::class);
+    Route::resource('managers', ManagerController::class);
+
+    Route::resource('messages', MessageController::class);
+
+    Route::resource('staffs', StaffController::class);
+
+    Route::resource('projects', ProjectController::class);
 });

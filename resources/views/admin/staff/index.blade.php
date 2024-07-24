@@ -23,7 +23,7 @@
                 <tr>
                     <td>{{ $staff->id }}</td>
                     <td>{{ $staff->user->name }}</td>
-                    <td>{{ $staff->manager->department }}</td>
+                    <td>{{ $staff->manager->name }}</td>
                     <td>{{ $staff->position }}</td>
                     <td>{{ $staff->phone_number }}</td>
                     <td>

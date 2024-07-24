@@ -15,7 +15,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="header-title">Description_uz</h4>
+                                <h4 class="header-title">Description</h4>
                                 <div id="editor_uz" style="height: 300px;">
                                     <!-- Quill editor content -->
                                 </div>
@@ -58,9 +58,17 @@
                     <option value="on_hold" {{ $project->status == 'on_hold' ? 'selected' : '' }}>On Hold</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="images">Images</label>
-                <input type="file" name="images[]" class="form-control" id="images" multiple>
+            <div class="row form-group">
+                @foreach($project->images as $image)
+                    <div class="col-md-3">
+                        <img src="{{ asset('storage/' . $image->image) }}" alt="Activity Image" class="img-thumbnail">
+{{--                        <form action="{{ route('project-images.destroy', $image->id) }}" method="POST">--}}
+{{--                            @csrf--}}
+{{--                            @method('DELETE')--}}
+{{--                            <button type="submit" class="btn btn-danger btn-sm mt-2">Delete</button>--}}
+{{--                        </form>--}}
+                    </div>
+                @endforeach
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>

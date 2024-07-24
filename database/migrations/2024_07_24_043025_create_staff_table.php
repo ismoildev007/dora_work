@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('position')->nullable();
             $table->string('phone_number')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('manager_id')->references('id')->on('managers')->onDelete('set null');
+            $table->foreign('manager_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 

@@ -28,7 +28,7 @@ class Project extends Model
     // Relationship with Manager (inverse one-to-many)
     public function manager()
     {
-        return $this->belongsTo(Manager::class, 'manager_id', 'id');
+        return $this->belongsTo(User::class, 'manager_id', 'id');
     }
 
     // Relationship with Activities (one-to-many)

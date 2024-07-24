@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->enum('activity_type', ['meeting', 'call', 'email', 'task', 'other']);
-            $table->timestamp('activity_date');
+            $table->string('activity_date');
             $table->unsignedBigInteger('staff_id')->nullable();
             $table->unsignedBigInteger('client_id')->nullable();
             $table->unsignedBigInteger('project_id')->nullable();

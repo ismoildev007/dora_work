@@ -23,7 +23,7 @@ return new class extends Migration
             $table->timestamps(); // created_at and updated_at
 
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('set null');
-            $table->foreign('manager_id')->references('id')->on('managers')->onDelete('set null');
+            $table->foreign('manager_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 

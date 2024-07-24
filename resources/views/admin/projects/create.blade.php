@@ -14,7 +14,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="header-title">Description_uz</h4>
+                                <h4 class="header-title">Description</h4>
                                 <div id="editor_uz" style="height: 300px;">
                                     <!-- Quill editor content -->
                                 </div>

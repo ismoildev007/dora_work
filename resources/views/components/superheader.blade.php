@@ -26,52 +26,6 @@
                     <span class="badge bg-primary rounded ms-auto">01</span>
                 </a>
             </li>
-
-            {{-- @can('view-statistics')--}}
-            {{-- <li class="menu-item">--}}
-            {{-- <a href="{{ route('statistic.index')}}" class="menu-link waves-effect waves-light">--}}
-            {{-- <span class="menu-icon"><i class="bx bx-calendar"></i></span>--}}
-            {{-- <span class="menu-text">Statistikalar</span>--}}
-            {{-- </a>--}}
-            {{-- </li>--}}
-            {{-- @endcan--}}
-
-            {{-- @can('view-work-category')--}}
-            {{-- <li class="menu-item">--}}
-            {{-- <a href="{{ route('work-category.index') }}" class="menu-link waves-effect waves-light">--}}
-            {{-- <span class="menu-icon"><i class="bx bx-calendar"></i></span>--}}
-            {{-- <span class="menu-text">Bo'lim qo'shish</span>--}}
-            {{-- </a>--}}
-            {{-- </li>--}}
-
-            {{-- @endcan--}}
-            {{-- @can('date-task')--}}
-            {{-- <li class="menu-item">--}}
-            {{-- <a href="{{ route('date-task.index')}}" class="menu-link waves-effect waves-light">--}}
-            {{-- <span class="menu-icon"><i class="bx bx-calendar"></i></span>--}}
-            {{-- <span class="menu-text">Kunlik vazifalar</span>--}}
-            {{-- </a>--}}
-            {{-- </li>--}}
-            {{-- @endcan--}}
-
-            {{-- <li class="menu-item">--}}
-            {{-- <a href="#menuPlans" data-bs-toggle="collapse" class="menu-link waves-effect waves-light">--}}
-            {{-- <span class="menu-icon"><i class="bx bx-file"></i></span>--}}
-            {{-- <span class="menu-text"> Plans </span>--}}
-            {{-- <span class="menu-arrow"></span>--}}
-            {{-- </a>--}}
-            {{-- <div class="collapse" id="menuPlans">--}}
-            {{-- <ul class="sub-menu">--}}
-
-            {{-- <li class="menu-item">--}}
-            {{-- <a href="javascript: void(0)" class="menu-link">--}}
-            {{-- <span class="menu-text">Maqsad</span>--}}
-            {{-- </a>--}}
-            {{-- </li>--}}
-            {{-- --}}
-            {{-- </ul>--}}
-            {{-- </div>--}}
-            {{-- </li>--}}
             <li class="menu-item">
                 <a href="{{ route('users.index') }}" class="menu-link waves-effect waves-light">
                     <span class="menu-icon"><i class="bx bx-user"></i></span>
@@ -152,41 +106,11 @@
                     <button class="btn">Chiqish</button>
                 </span>
             </form>
-            {{-- @can('view-work-category')--}}
-            {{-- <li class="menu-item">--}}
-            {{-- <div class="collapse" id="menuKassa">--}}
-            {{-- <ul class="sub-menu">--}}
-            {{-- <li class="menu-item">--}}
-            {{-- <a href="{{ route('amounts.index') }}" class="menu-link">--}}
-            {{-- <span class="menu-text">Amount</span>--}}
-            {{-- </a>--}}
-            {{-- </li>--}}
-            {{-- <li class="menu-item">--}}
-            {{-- <a href="{{ route('departments.index') }}" class="menu-link">--}}
-            {{-- <span class="menu-text">Deaprtment</span>--}}
-            {{-- </a>--}}
-            {{-- </li>--}}
-            {{-- </ul>--}}
-            {{-- </div>--}}
-            {{-- </li>--}}
-            {{-- @endcan--}}
-            {{-- @can('view-statistics')--}}
-            {{-- <li class="menu-item">--}}
-            {{-- <a href="{{ route('statistic.index')}}" class="menu-link waves-effect waves-light">--}}
-            {{-- <span class="menu-icon"><i class="bx bx-calendar"></i></span>--}}
-            {{-- <span class="menu-text">Mijozlar</span>--}}
-            {{-- </a>--}}
-            {{-- </li>--}}
-            {{-- @endcan--}}
-
-            {{-- @can('date-task-super-admin')--}}
-            {{-- <li class="menu-item">--}}
-            {{-- <a href="{{ route('date-task-super-admin.index')}}" class="menu-link waves-effect waves-light">--}}
-            {{-- <span class="menu-icon"><i class="bx bx-calendar"></i></span>--}}
-            {{-- <span class="menu-text">Kunlik ishchilar vazifalari</span>--}}
-            {{-- </a>--}}
-            {{-- </li>--}}
-            {{-- @endcan--}}
+            <span class="text-danger">
+                @auth
+                    {{ auth()->user()->name }}
+                @endauth
+            </span>
         </ul>
     </div>
 </div>
@@ -407,17 +331,6 @@
                 <li class="nav-link" id="theme-mode">
                     <i class="bx bx-moon font-size-24"></i>
                 </li>
-
-                {{-- <li class="dropdown">--}}
-                {{-- <span class="ms-1 d-none d-md-inline-block">--}}
-                {{-- {{auth()->user()->name}}--}}
-                {{-- </span>--}}
-                {{-- </li>--}}
-
-                {{-- <form method="post" action="{{ route('logout') }}">--}}
-                {{-- @csrf--}}
-                {{-- <button class="btn btn-danger">Log Out</button>--}}
-                {{-- </form>--}}
 
             </ul>
         </div>

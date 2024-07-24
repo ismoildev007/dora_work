@@ -19,7 +19,7 @@ class StaffController extends Controller
     // Show the form for creating a new resource.
     public function create()
     {
-        $managers = Manager::all();
+        $managers = User::where('role', 'manager')->get();
         $users = User::where('role', 'staff')->get();
         return view('admin.staff.create', compact([
             'managers',
@@ -32,7 +32,7 @@ class StaffController extends Controller
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'manager_id' => 'nullable|exists:managers,id',
+            'manager_id' => 'nullable|exists:users,id',
             'position' => 'required|string|max:255',
             'phone_number' => 'required|string|max:20',
         ]);
@@ -45,8 +45,8 @@ class StaffController extends Controller
     // Show the form for editing the specified resource.
     public function edit(Staff $staff)
     {
-        $managers = Staff::all();
-        $users = User::all();
+        $managers = User::where('role', 'manager')->get();
+        $users = User::where('role', 'staff');
         return view('admin.staff.edit', compact(
             'staff',
             'managers',
@@ -59,7 +59,7 @@ class StaffController extends Controller
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'manager_id' => 'nullable|exists:managers,id',
+            'manager_id' => 'nullable|exists:users,id',
             'position' => 'required|string|max:255',
             'phone_number' => 'required|string|max:20',
         ]);

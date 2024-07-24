@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\Client;
 use App\Models\Manager;
 use App\Models\ProjectImage;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,7 +21,7 @@ class ProjectController extends Controller
     public function create()
     {
         $clients = Client::all();
-        $managers = Manager::all();
+        $managers = User::where('role', 'manager')->get();
         return view('admin.projects.create', compact('clients', 'managers'));
     }
 
@@ -32,10 +33,11 @@ class ProjectController extends Controller
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date',
             'client_id' => 'nullable|exists:clients,id',
-            'manager_id' => 'nullable|exists:managers,id',
+            'manager_id' => 'nullable|exists:users,id',
             'status' => 'required|in:planned,active,completed,on_hold',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048'
         ]);
+
 
         $project = Project::create($request->all());
 
@@ -62,7 +64,7 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
         $clients = Client::all();
-        $managers = Manager::all();
+        $managers = User::where('role', 'manager')->get();
         return view('admin.projects.edit', compact('project', 'clients', 'managers'));
     }
 
@@ -74,7 +76,7 @@ class ProjectController extends Controller
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date',
             'client_id' => 'nullable|exists:clients,id',
-            'manager_id' => 'nullable|exists:managers,id',
+            'manager_id' => 'nullable|exists:users,id',
             'status' => 'required|in:planned,active,completed,on_hold',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
@@ -106,4 +108,17 @@ class ProjectController extends Controller
 
         return redirect()->route('projects.index')->with('success', 'Project deleted successfully.');
     }
+
+    public function destroyImage(ProjectImage $projectImage)
+    {
+
+        if (!is_null($projectImage->image)) {
+            Storage::delete($projectImage->image);
+            dd('salom');
+        }
+        $projectImage->delete();
+
+        return back()->with('success', 'Image deleted successfully.');
+    }
+
 }
