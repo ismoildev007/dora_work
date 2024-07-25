@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\Project;
 use App\Models\Staff;
 use App\Models\User;
+use App\Notifications\ActivityNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -49,6 +50,10 @@ class ActivityController extends Controller
 
         $activity = Activity::create($request->except('images'));
 
+        $staffMembers = User::all();
+        foreach ($staffMembers as $staff) {
+            $staff->notify(new ActivityNotification($activity));
+        }
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 $path = $image->store('public/activity_images');
@@ -59,7 +64,7 @@ class ActivityController extends Controller
             }
         }
 
-        return redirect()->route('activities.index')->with('success', 'Activity created successfully.');
+        return redirect()->route('activities.index')->with('success', 'ActivityNotification created successfully.');
     }
 
     // Show the form for editing the specified activity
@@ -103,7 +108,7 @@ class ActivityController extends Controller
             }
         }
 
-        return redirect()->route('activities.index')->with('success', 'Activity updated successfully.');
+        return redirect()->route('activities.index')->with('success', 'ActivityNotification updated successfully.');
     }
 
 
@@ -118,7 +123,7 @@ class ActivityController extends Controller
 
         $activity->delete();
 
-        return redirect()->route('activities.index')->with('success', 'Activity deleted successfully.');
+        return redirect()->route('activities.index')->with('success', 'ActivityNotification deleted successfully.');
     }
 
     // Show the details of a specific activity

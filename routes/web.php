@@ -4,6 +4,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -45,4 +46,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('staffs', StaffController::class);
 
     Route::resource('projects', ProjectController::class);
+    Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::get('notifications/read/{id}', [NotificationController::class, 'show'])->name('notifications.read');
+    Route::get('notifications/clear', [NotificationController::class, 'clear'])->name('notifications.clear');
+    Route::get('notifications/all', [NotificationController::class, 'all'])->name('notifications.all');
 });

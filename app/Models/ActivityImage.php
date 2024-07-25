@@ -14,7 +14,7 @@ class ActivityImage extends Model
         'image',
     ];
 
-    // Relationship with Activity (inverse one-to-many)
+    // Relationship with ActivityNotification (inverse one-to-many)
     public function activity()
     {
         return $this->belongsTo(Activity::class, 'activity_id', 'id');
