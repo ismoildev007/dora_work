@@ -33,15 +33,15 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="client_id">Client</label>
-                <select name="client_id" class="form-control" id="client_id">
-                    <option value="">Select Client</option>
-                    @foreach($clients as $client)
-                        <option value="{{ $client->id }}" {{ $activity->client_id == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+{{--            <div class="form-group">--}}
+{{--                <label for="client_id">Client</label>--}}
+{{--                <select name="client_id" class="form-control" id="client_id">--}}
+{{--                    <option value="">Select Client</option>--}}
+{{--                    @foreach($clients as $client)--}}
+{{--                        <option value="{{ $client->id }}" {{ $activity->client_id == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>--}}
+{{--                    @endforeach--}}
+{{--                </select>--}}
+{{--            </div>--}}
 
             <div class="form-group">
                 <label for="project_id">Project</label>

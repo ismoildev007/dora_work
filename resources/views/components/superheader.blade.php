@@ -86,6 +86,24 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                 </a>
             </li>
             @endcan
+            @can('view-department')
+                <li class="menu-item">
+                    <a href="{{ route('departments.index') }}" class="menu-link">
+                        <span class="menu-icon"><i class="bx bx-detail"></i></span>
+
+                        <span class="menu-text">Department</span>
+                    </a>
+                </li>
+            @endcan
+            @can('view-report')
+                <li class="menu-item">
+                    <a href="{{ route('reports.index') }}" class="menu-link">
+                        <span class="menu-icon"><i class="bx bxs-report"></i></span>
+
+                        <span class="menu-text">Report</span>
+                    </a>
+                </li>
+            @endcan
             @can('view-staff')
                 <li class="menu-item">
                     <a href="{{ route('staffs.index') }}" class="menu-link">

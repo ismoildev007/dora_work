@@ -13,7 +13,7 @@
             <p><strong>Activity Type:</strong> {{ ucfirst($activity->activity_type) }}</p>
             <p><strong>Activity Date:</strong> {{ $activity->activity_date }}</p>
             <p><strong>Staff:</strong> {{ $activity->staff->user->name ?? 'N/A' }}</p>
-            <p><strong>Client:</strong> {{ $activity->client->name ?? 'N/A' }}</p>
+{{--            <p><strong>Client:</strong> {{ $activity->client->name ?? 'N/A' }}</p>--}}
             <p><strong>Project:</strong> {{ $activity->project->name ?? 'N/A' }}</p>
             <div class="mt-4">
                 <h5>Images</h5>

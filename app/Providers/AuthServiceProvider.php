@@ -53,6 +53,12 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('view-staff', function ($user) {
             return in_array($user->role, ['admin', 'manager']); // Work ni ko'rish mumkin bo'lgan rollar
         });
+        Gate::define('view-department', function ($user) {
+            return in_array($user->role, ['admin']); // Work ni ko'rish mumkin bo'lgan rollar
+        });
+        Gate::define('view-report', function ($user) {
+            return in_array($user->role, ['admin']); // Work ni ko'rish mumkin bo'lgan rollar
+        });
 //        Gate::define('view-notification', function ($user) {
 //            return in_array($user->role, [0, 1, 2]); // Notification ni ko'rish mumkin bo'lgan rollar
 //        });

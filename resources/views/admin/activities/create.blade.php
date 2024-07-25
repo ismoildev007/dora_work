@@ -42,14 +42,14 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group">
-                <label for="client_id">Client</label>
-                <select name="client_id" id="client_id" class="form-control">
-                    @foreach($clients as $client)
-                        <option value="{{ $client->id }}">{{ $client->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+{{--            <div class="form-group">--}}
+{{--                <label for="client_id">Client</label>--}}
+{{--                <select name="client_id" id="client_id" class="form-control">--}}
+{{--                    @foreach($clients as $client)--}}
+{{--                        <option value="{{ $client->id }}">{{ $client->name }}</option>--}}
+{{--                    @endforeach--}}
+{{--                </select>--}}
+{{--            </div>--}}
             <div class="form-group">
                 <label for="project_id">Project</label>
                 <select name="project_id" id="project_id" class="form-control">

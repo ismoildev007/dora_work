@@ -16,7 +16,7 @@ class Activity extends Model
         'activity_type',
         'activity_date',
         'staff_id',
-        'client_id',
+//        'client_id',
         'project_id',
     ];
 
@@ -27,10 +27,10 @@ class Activity extends Model
     }
 
     // Relationship with Client (inverse one-to-many)
-    public function client()
-    {
-        return $this->belongsTo(Client::class, 'client_id', 'id');
-    }
+//    public function client()
+//    {
+//        return $this->belongsTo(Client::class, 'client_id', 'id');
+//    }
 
     // Relationship with Project (inverse one-to-many)
     public function project()

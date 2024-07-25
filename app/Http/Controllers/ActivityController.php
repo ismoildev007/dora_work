@@ -28,8 +28,12 @@ class ActivityController extends Controller
         $this->authorize('create', Activity::class);
         $staffs = Staff::all();
         $projects = Project::all();
-        $clients = Client::all();
-        return view('admin.activities.create', compact('staffs', 'projects', 'clients'));
+//        $clients = Client::all();
+        return view('admin.activities.create', compact(
+            'staffs',
+            'projects',
+//            'clients'
+        ));
     }
 
     // Store a newly created activity in storage
@@ -41,7 +45,7 @@ class ActivityController extends Controller
             'activity_type' => 'nullable|in:meeting,call,email,task,other',
             'activity_date' => 'nullable|string',
             'staff_id' => 'nullable|exists:staff,id',
-            'client_id' => 'nullable|exists:clients,id',
+//            'client_id' => 'nullable|exists:clients,id',
             'project_id' => 'nullable|exists:projects,id',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
@@ -72,13 +76,13 @@ class ActivityController extends Controller
     {
         $this->authorize('update', $activity);
         $staffs = Staff::all();
-        $clients = Client::all();
+//        $clients = Client::all();
         $projects = Project::all();
         return view('admin.activities.edit', compact(
             'activity',
             'staffs',
             'projects',
-            'clients'
+//            'clients'
         ));
     }
 
@@ -91,7 +95,7 @@ class ActivityController extends Controller
             'activity_type' => 'required|in:meeting,call,email,task,other',
             'activity_date' => 'required|date',
             'staff_id' => 'nullable|exists:staff,id',
-            'client_id' => 'nullable|exists:clients,id',
+//            'client_id' => 'nullable|exists:clients,id',
             'project_id' => 'nullable|exists:projects,id',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);

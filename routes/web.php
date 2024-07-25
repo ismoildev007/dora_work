@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\DepartmentController;
 
 
 /*
@@ -42,6 +44,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('managers', ManagerController::class);
 
     Route::resource('messages', MessageController::class);
+
+    Route::resource('reports', ReportController::class);
+
+    Route::resource('departments', DepartmentController::class);
+
+
 
     Route::resource('staffs', StaffController::class);
 

@@ -16,7 +16,7 @@
                 <th>Type</th>
                 <th>Date</th>
                 <th>Staff</th>
-                <th>Client</th>
+{{--                <th>Client</th>--}}
                 <th>Project</th>
                 <th>Actions</th>
             </tr>
@@ -29,7 +29,7 @@
                     <td>{{ $activity->activity_type }}</td>
                     <td>{{ $activity->activity_date }}</td>
                     <td>{{ $activity->staff->user->name ?? 'N/A' }}</td>
-                    <td>{{ $activity->client->name ?? 'N/A' }}</td>
+{{--                    <td>{{ $activity->client->name ?? 'N/A' }}</td>--}}
                     <td>{{ $activity->project->name ?? 'N/A' }}</td>
                     <td>
                         @can('update', $activity)

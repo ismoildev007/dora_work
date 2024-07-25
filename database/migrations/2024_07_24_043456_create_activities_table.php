@@ -17,12 +17,12 @@ return new class extends Migration
             $table->enum('activity_type', ['meeting', 'call', 'email', 'task', 'other']);
             $table->string('activity_date');
             $table->unsignedBigInteger('staff_id')->nullable();
-            $table->unsignedBigInteger('client_id')->nullable();
+//            $table->unsignedBigInteger('client_id')->nullable();
             $table->unsignedBigInteger('project_id')->nullable();
             $table->timestamps(); // created_at and updated_at
 
             $table->foreign('staff_id')->references('id')->on('staff')->onDelete('set null');
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('set null');
+//            $table->foreign('client_id')->references('id')->on('clients')->onDelete('set null');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('set null');
         });
     }
