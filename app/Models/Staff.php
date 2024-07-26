@@ -34,4 +34,10 @@ class Staff extends Model
     {
         return $this->hasMany(Activity::class, 'staff_id', 'id');
     }
+
+    // Relationship with Attendance (one-to-many)
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class, 'staff_id', 'id');
+    }
 }
