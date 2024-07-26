@@ -72,35 +72,48 @@ class AuthController extends Controller
         $departments = Department::all();
 
         // Determine the date range based on the selected period
-        $startDate = now();
-        $endDate = now();
+        $endDate = now(); // Current date
+        $startDate = clone $endDate; // Clone to calculate the start date
 
         switch ($period) {
             case 'quarterly':
-                $startDate->subMonths(2);
+                $startDate->subMonths(3); // Include current and last 2 months (total 3 months)
                 break;
             case 'semi-annual':
-                $startDate->subMonths(5);
+                $startDate->subMonths(6); // Include current and last 5 months (total 6 months)
                 break;
             case 'yearly':
-                $startDate->subYear();
+                $startDate->subYear()->addMonth(); // Include the last 12 months, from the start of the current month last year
                 break;
             default: // 'monthly'
-                $startDate->subMonth();
+                $startDate->subMonth(); // Last full month
                 break;
         }
 
         // Fetch reports based on department filter and period
-        $query = Report::whereBetween('date', [$startDate->format('Y-m'), $endDate->format('Y-m')]);
+        $query = Report::whereBetween('date', [$startDate->startOfMonth(), $endDate->endOfMonth()]);
 
         if ($departmentId) {
             $query->where('department_id', $departmentId);
         }
 
-        $reports = $query->get();
+        // Include the department name and order by date
+        $reports = $query->with('department')->orderBy('date', 'asc')->get();
 
-        return view('dashboards.admin', compact('reports', 'departments', 'period')); // Points to the admin dashboard view
+        // Format report dates for display and include department name if not filtered by a specific department
+        $reports->transform(function ($report) use ($departmentId) {
+            $report->date = \Carbon\Carbon::parse($report->date)->format('F Y'); // Month name and year
+            if (!$departmentId) {
+                // Append department name if not filtered by department
+                $report->department_name = $report->department->name;
+            }
+            return $report;
+        });
+
+        return view('dashboards.admin', compact('reports', 'departments', 'period', 'departmentId')); // Pass departmentId for displaying
     }
+
+
 
 
     // Staff dashboard

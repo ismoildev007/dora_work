@@ -4,14 +4,55 @@ namespace App\Http\Controllers;
 
 use App\Models\Report;
 use App\Models\Department;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $reports = Report::with('department')->get();
-        return view('admin.reports.index', compact('reports'));
+        $departmentId = $request->input('department_id');
+        $month = $request->input('month');
+        $year = $request->input('year');
+
+        // Fetch all departments for the dropdown
+        $departments = Department::all();
+
+        // Fetch distinct years for the dropdown
+        $years = DB::table('reports')
+        ->selectRaw('YEAR(date) as year')
+        ->distinct()
+        ->pluck('year');        // Determine the date range based on the selected month and year
+        $startDate = now()->startOfYear(); // Default to the start of the current year
+        $endDate = now(); // Current date
+
+        if ($year) {
+            $startDate = Carbon::create($year, 1, 1);
+            $endDate = Carbon::create($year, 12, 31);
+        }
+
+        if ($month) {
+            $startDate = Carbon::create($year ?? now()->year, $month, 1);
+            $endDate = $startDate->copy()->endOfMonth();
+        }
+
+        // Fetch reports based on department filter and date range
+        $query = Report::whereBetween('date', [$startDate->format('Y-m-d'), $endDate->format('Y-m-d')]);
+
+        if ($departmentId) {
+            $query->where('department_id', $departmentId);
+        }
+
+        $reports = $query->get();
+
+        // Format report dates for display
+        $reports->transform(function ($report) {
+            $report->date = \Carbon\Carbon::parse($report->date)->format('F Y');
+            return $report;
+        });
+
+        return view('admin.reports.index', compact('reports', 'departments', 'years'));
     }
 
     public function create()
@@ -25,8 +66,8 @@ class ReportController extends Controller
         $validated = $request->validate([
             'department_id' => 'required|exists:departments,id',
             'target' => 'required|numeric',
-            'profit' => 'required|numeric',
-            'outlay' => 'required|numeric',
+            'profit' => 'nullable|numeric',
+            'outlay' => 'nullable|numeric',
             'date' => 'required|date_format:Y-m', // Faqat yil va oy
         ]);
 
@@ -66,8 +107,8 @@ class ReportController extends Controller
         $validated = $request->validate([
             'department_id' => 'required|exists:departments,id',
             'target' => 'required|numeric',
-            'profit' => 'required|numeric',
-            'outlay' => 'required|numeric',
+            'profit' => 'nullable|numeric',
+            'outlay' => 'nullable|numeric',
             'date' => 'required|date_format:Y-m', // Ensure date format matches the expected format
         ]);
 
