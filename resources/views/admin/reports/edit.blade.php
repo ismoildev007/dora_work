@@ -24,7 +24,7 @@
             </div>
             <div class="mb-3">
                 <label for="date" class="form-label">Sana</label>
-                <input type="date" class="form-control" id="date" name="date" value="{{ $report->date }}" required>
+                <input type="month" class="form-control" id="date" name="date" value="{{ $report->date }}" required>
             </div>
             <button type="submit" class="btn btn-primary">Yangilash</button>
         </form>

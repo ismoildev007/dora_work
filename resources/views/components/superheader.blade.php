@@ -26,15 +26,14 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
 
             <li class="menu-title">Menyu</li>
             <li class="menu-item">
-                <a
-                       @if( auth()->user()->role == 'admin')
-                           href="{{ route('admin.dashboard') }}"
-                       @elseif( auth()->user()->role == 'manager')
-                           href="{{ route('manager.dashboard') }}"
-                       @elseif (auth()->user()->role == 'staff')
-                           href="{{ route('staff.dashboard') }}"
-                       @endif
-                        class="menu-link waves-effect waves-light">
+                <a @if( auth()->user()->role == 'admin')
+                    href="{{ route('admin.dashboard') }}"
+                    @elseif( auth()->user()->role == 'manager')
+                    href="{{ route('manager.dashboard') }}"
+                    @elseif (auth()->user()->role == 'staff')
+                    href="{{ route('staff.dashboard') }}"
+                    @endif
+                    class="menu-link waves-effect waves-light">
 
                     <span class="menu-icon"><i class="bx bx-home-smile"></i></span>
                     <span class="menu-text"> Boshqaruv paneli </span>
@@ -42,28 +41,28 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                 </a>
             </li>
             @can('view-user')
-                <li class="menu-item">
-                    <a href="{{ route('users.index') }}" class="menu-link waves-effect waves-light">
-                        <span class="menu-icon"><i class="bx bx-user"></i></span>
-                        <span class="menu-text"> Foydalanuvchilar </span>
-                    </a>
-                </li>
+            <li class="menu-item">
+                <a href="{{ route('users.index') }}" class="menu-link waves-effect waves-light">
+                    <span class="menu-icon"><i class="bx bx-user"></i></span>
+                    <span class="menu-text"> Foydalanuvchilar </span>
+                </a>
+            </li>
             @endcan
             @can('view-activity')
-                <li class="menu-item">
-                    <a href="{{ route('activities.index') }}" class="menu-link waves-effect waves-light">
-                        <span class="menu-icon"><i class="bx bxl-wordpress"></i></span>
-                        <span class="menu-text"> Faoliyat </span>
-                    </a>
-                </li>
+            <li class="menu-item">
+                <a href="{{ route('activities.index') }}" class="menu-link waves-effect waves-light">
+                    <span class="menu-icon"><i class="bx bxl-wordpress"></i></span>
+                    <span class="menu-text"> Faoliyat </span>
+                </a>
+            </li>
             @endcan
             @can('view-client')
-                <li class="menu-item">
-                    <a href="{{ route('clients.index') }}" class="menu-link waves-effect waves-light">
-                        <span class="menu-icon"><i class="bx bx-clipboard"></i></span>
-                        <span class="menu-text"> Mijozlar </span>
-                    </a>
-                </li>
+            <li class="menu-item">
+                <a href="{{ route('clients.index') }}" class="menu-link waves-effect waves-light">
+                    <span class="menu-icon"><i class="bx bx-clipboard"></i></span>
+                    <span class="menu-text"> Mijozlar </span>
+                </a>
+            </li>
             @endcan
 
             <!-- <li class="menu-item">
@@ -83,32 +82,39 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
             </li>
             @endcan
             @can('view-department')
-                <li class="menu-item">
-                    <a href="{{ route('departments.index') }}" class="menu-link">
-                        <span class="menu-icon"><i class="bx bx-detail"></i></span>
+            <li class="menu-item">
+                <a href="{{ route('departments.index') }}" class="menu-link">
+                    <span class="menu-icon"><i class="bx bx-detail"></i></span>
 
-                        <span class="menu-text">Bo'limlar</span>
-                    </a>
-                </li>
+                    <span class="menu-text">Bo'limlar</span>
+                </a>
+            </li>
             @endcan
             @can('view-report')
-                <li class="menu-item">
-                    <a href="{{ route('reports.index') }}" class="menu-link">
-                        <span class="menu-icon"><i class="bx bxs-report"></i></span>
+            <li class="menu-item">
+                <a href="{{ route('reports.index') }}" class="menu-link">
+                    <span class="menu-icon"><i class="bx bxs-report"></i></span>
 
-                        <span class="menu-text">Hisobotlar</span>
-                    </a>
-                </li>
+                    <span class="menu-text">Hisobotlar</span>
+                </a>
+            </li>
             @endcan
             @can('view-staff')
-                <li class="menu-item">
-                    <a href="{{ route('staffs.index') }}" class="menu-link">
-                        <span class="menu-icon"><i class="bx bx-star"></i></span>
+            <li class="menu-item">
+                <a href="{{ route('staffs.index') }}" class="menu-link">
+                    <span class="menu-icon"><i class="bx bx-star"></i></span>
 
-                        <span class="menu-text">Xodimlar</span>
-                    </a>
-                </li>
+                    <span class="menu-text">Xodimlar</span>
+                </a>
+            </li>
             @endcan
+            <!-- <li class="menu-item">
+                <a href="{{ route('attendance.index') }}" class="menu-link">
+                    <span class="menu-icon"><i class="bx bx-attendance"></i></span>
+
+                    <span class="menu-text"> Davomat </span>
+                </a>
+            </li> -->
             <form method="post" action="{{ route('logout') }}">
                 <i class="fe-log-out"></i>
                 <span>
@@ -221,26 +227,26 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
 
                         <div class="px-1" style="max-height: 300px;" data-simplebar>
                             @forelse($notifications as $notification)
-                                <a href="{{ route('notifications.read', $notification->id) }}" class="dropdown-item p-0 notify-item card {{ $notification->read_at ? 'read-noti' : 'unread-noti' }} shadow-none mb-1">
-                                    <div class="card-body">
-                                        <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0">
-                                                <div class="notify-icon bg-primary">
-                                                    <i class="mdi mdi-comment-account-outline"></i>
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1 text-truncate ms-2">
-                                                <h5 class="noti-item-title fw-semibold font-size-14">{{ $notification->data['title'] ?? 'Xabarnoma' }}
-                                                    <small class="fw-normal text-muted ms-1">{{ $notification->created_at->diffForHumans() }}</small>
-                                                </h5>
-                                                <small class="noti-item-subtitle text-muted">{{ $notification->data['message'] ?? '' }}</small>
+                            <a href="{{ route('notifications.read', $notification->id) }}" class="dropdown-item p-0 notify-item card {{ $notification->read_at ? 'read-noti' : 'unread-noti' }} shadow-none mb-1">
+                                <div class="card-body">
+                                    <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-shrink-0">
+                                            <div class="notify-icon bg-primary">
+                                                <i class="mdi mdi-comment-account-outline"></i>
                                             </div>
                                         </div>
+                                        <div class="flex-grow-1 text-truncate ms-2">
+                                            <h5 class="noti-item-title fw-semibold font-size-14">{{ $notification->data['title'] ?? 'Xabarnoma' }}
+                                                <small class="fw-normal text-muted ms-1">{{ $notification->created_at->diffForHumans() }}</small>
+                                            </h5>
+                                            <small class="noti-item-subtitle text-muted">{{ $notification->data['message'] ?? '' }}</small>
+                                        </div>
                                     </div>
-                                </a>
+                                </div>
+                            </a>
                             @empty
-                                <div class="text-center text-muted mt-3">Yangi xabar yo'q</div>
+                            <div class="text-center text-muted mt-3">Yangi xabar yo'q</div>
                             @endforelse
 
                             <div class="text-center">
@@ -260,7 +266,7 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                 </li>
                 <span class="text-danger" style="font-weight: 900">
                     @auth
-                        <i class="bx bx-user"></i> {{ auth()->user()->name }}
+                    <i class="bx bx-user"></i> {{ auth()->user()->name }}
                     @endauth
                 </span>
 
