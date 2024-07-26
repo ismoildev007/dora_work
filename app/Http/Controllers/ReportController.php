@@ -24,10 +24,25 @@ class ReportController extends Controller
     {
         $validated = $request->validate([
             'department_id' => 'required|exists:departments,id',
+            'target' => 'required|numeric',
             'profit' => 'required|numeric',
             'outlay' => 'required|numeric',
-            'date' => 'required|date',
+            'date' => 'required|date_format:Y-m', // Faqat yil va oy
         ]);
+
+        // Parse the date to check for existing reports in the same month
+        $date = \Carbon\Carbon::parse($validated['date']);
+        $formattedDate = $date->format('Y-m'); // Yil va oyni formatlash
+
+        $exists = Report::where('department_id', $validated['department_id'])
+            ->where('date', $formattedDate) // String sifatida tekshirish
+            ->exists();
+
+        if ($exists) {
+            return redirect()->back()->withErrors(['date' => 'Bu oyda hisobot allaqachon kiritilgan. Iltimos, boshqa oyni tanlang.'])->withInput();
+        }
+
+        $validated['date'] = $formattedDate; // Formatlangan sanani saqlash
 
         Report::create($validated);
 
@@ -49,10 +64,23 @@ class ReportController extends Controller
     {
         $validated = $request->validate([
             'department_id' => 'required|exists:departments,id',
+            'target' => 'required|numeric',
             'profit' => 'required|numeric',
             'outlay' => 'required|numeric',
             'date' => 'required|date',
         ]);
+
+        // Tekshirish: shu oydagi hisobot mavjudmi?
+        $date = \Carbon\Carbon::parse($validated['date']);
+        $exists = Report::where('department_id', $validated['department_id'])
+            ->whereYear('date', $date->year)
+            ->whereMonth('date', $date->month)
+            ->where('id', '!=', $report->id)
+            ->exists();
+
+        if ($exists) {
+            return redirect()->back()->withErrors(['date' => 'Bu oyda hisobot allaqachon kiritilgan. Iltimos, boshqa oyni tanlang.'])->withInput();
+        }
 
         $report->update($validated);
 

@@ -11,6 +11,7 @@ class Report extends Model
 
     protected $fillable = [
         'department_id',
+        'target',
         'profit',
         'outlay',
         'date',

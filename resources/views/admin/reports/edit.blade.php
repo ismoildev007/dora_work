@@ -15,16 +15,24 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label for="profit" class="form-label">Foyda</label>
+                <label for="target" class="form-label">Maqsad</label>
+                <input type="text" class="form-control" id="target" name="target" value="{{ $report->target }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="profit" class="form-label">Kirim</label>
                 <input type="text" class="form-control" id="profit" name="profit" value="{{ $report->profit }}" required>
             </div>
             <div class="mb-3">
-                <label for="outlay" class="form-label">Harajat</label>
+                <label for="outlay" class="form-label">Chiqim</label>
                 <input type="text" class="form-control" id="outlay" name="outlay" value="{{ $report->outlay }}" required>
             </div>
-            <div class="mb-3">
-                <label for="date" class="form-label">Sana</label>
-                <input type="month" class="form-control" id="date" name="date" value="{{ $report->date }}" required>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Sana</label>
+                        <input type="month" class="form-control" id="date" name="date" value="{{ $report->date }}" required>
+                    </div>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">Yangilash</button>
         </form>

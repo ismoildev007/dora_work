@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
+            $table->string('target')->nullable();
             $table->string('profit')->nullable();
             $table->string('outlay')->nullable();
-            $table->string('date')->nullable();
+            $table->string('date');
             $table->timestamps();
         });
     }

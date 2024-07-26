@@ -9,8 +9,9 @@
             <tr>
                 <th>ID</th>
                 <th>Bo'lim</th>
-                <th>Foyda</th>
-                <th>Harajat</th>
+                <th>Maqsad</th>
+                <th>Kirim</th>
+                <th>Chiqim</th>
                 <th>Sana</th>
                 <th>Amallar</th>
             </tr>
@@ -20,6 +21,7 @@
                 <tr>
                     <td>{{ $report->id }}</td>
                     <td>{{ $report->department->name }}</td>
+                    <td>{{ $report->target }}</td>
                     <td>{{ $report->profit }}</td>
                     <td>{{ $report->outlay }}</td>
                     <td>{{ $report->date }}</td>
