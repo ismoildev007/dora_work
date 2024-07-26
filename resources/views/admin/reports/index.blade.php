@@ -2,17 +2,17 @@
 
 @section('content')
     <div class="container">
-        <h1>Reports</h1>
-        <a href="{{ route('reports.create') }}" class="btn btn-primary">Create Report</a>
+        <h1>Hisobotlar</h1>
+        <a href="{{ route('reports.create') }}" class="btn btn-primary">Hisobot Yaratish</a>
         <table class="table">
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Department</th>
-                <th>Profit</th>
-                <th>Outlay</th>
-                <th>Date</th>
-                <th>Actions</th>
+                <th>Bo'lim</th>
+                <th>Foyda</th>
+                <th>Harajat</th>
+                <th>Sana</th>
+                <th>Amallar</th>
             </tr>
             </thead>
             <tbody>
@@ -24,11 +24,11 @@
                     <td>{{ $report->outlay }}</td>
                     <td>{{ $report->date }}</td>
                     <td>
-                        <a href="{{ route('reports.edit', $report->id) }}" class="btn btn-warning">Edit</a>
+                        <a href="{{ route('reports.edit', $report->id) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                         <form action="{{ route('reports.destroy', $report->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
                 </tr>

@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
-        <h1>Staff List</h1>
-        <a href="{{ route('staffs.create') }}" class="btn btn-primary mb-3">Add New Staff</a>
+        <h1>Xodimlar Roʻyxati</h1>
+        <a href="{{ route('staffs.create') }}" class="btn btn-primary mb-3">Yangi Xodim Qoʻshish</a>
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
@@ -11,11 +11,11 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>User ID</th>
-                <th>Manager ID</th>
-                <th>Position</th>
-                <th>Phone Number</th>
-                <th>Actions</th>
+                <th>Foydalanuvchi</th>
+                <th>Menejer</th>
+                <th>Lavozim</th>
+                <th>Telefon Raqami</th>
+                <th>Harakatlar</th>
             </tr>
             </thead>
             <tbody>
@@ -27,11 +27,11 @@
                     <td>{{ $staff->position }}</td>
                     <td>{{ $staff->phone_number }}</td>
                     <td>
-                        <a href="{{ route('staffs.edit', $staff->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{{ route('staffs.edit', $staff->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                         <form action="{{ route('staffs.destroy', $staff->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
                 </tr>

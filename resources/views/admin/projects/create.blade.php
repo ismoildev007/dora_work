@@ -2,11 +2,11 @@
 
 @section('content')
     <div class="container">
-        <h1>Create Project</h1>
+        <h1>Loyiha Yaratish</h1>
         <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data" onsubmit="updateEditorContent()">
             @csrf
             <div class="form-group">
-                <label for="name">Name</label>
+                <label for="name">Nomi</label>
                 <input type="text" name="name" class="form-control" id="name" required>
             </div>
             <div class="mt-3">
@@ -14,7 +14,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="header-title">Description</h4>
+                                <h4 class="header-title">Tavsif</h4>
                                 <div id="editor_uz" style="height: 300px;">
                                     <!-- Quill editor content -->
                                 </div>
@@ -25,15 +25,15 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="start_date">Start Date</label>
+                <label for="start_date">Boshlanish Sanasi</label>
                 <input type="date" name="start_date" class="form-control" id="start_date">
             </div>
             <div class="form-group">
-                <label for="end_date">End Date</label>
+                <label for="end_date">Tugash Sanasi</label>
                 <input type="date" name="end_date" class="form-control" id="end_date">
             </div>
             <div class="form-group">
-                <label for="client_id">Client</label>
+                <label for="client_id">Mijoz</label>
                 <select name="client_id" class="form-control" id="client_id">
                     @foreach($clients as $client)
                         <option value="{{ $client->id }}">{{ $client->name }}</option>
@@ -41,7 +41,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="manager_id">Manager</label>
+                <label for="manager_id">Boshqaruvchi</label>
                 <select name="manager_id" class="form-control" id="manager_id">
                     @foreach($managers as $manager)
                         <option value="{{ $manager->id }}">{{ $manager->name }}</option>
@@ -49,19 +49,19 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="status">Status</label>
+                <label for="status">Holat</label>
                 <select name="status" class="form-control" id="status" required>
-                    <option value="planned">Planned</option>
-                    <option value="active">Active</option>
-                    <option value="completed">Completed</option>
-                    <option value="on_hold">On Hold</option>
+                    <option value="planned">Rejalashtirilgan</option>
+                    <option value="active">Faol</option>
+                    <option value="completed">Tamamlangan</option>
+                    <option value="on_hold">To'xtatilgan</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="images">Images</label>
+                <label for="images">Rasmlar</label>
                 <input type="file" name="images[]" class="form-control" id="images" multiple>
             </div>
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-primary">Yaratish</button>
         </form>
     </div>
 

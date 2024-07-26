@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label for="name">Name</label>
+    <label for="name">Ism</label>
     <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $user->name ?? '') }}">
 </div>
 
@@ -9,16 +9,16 @@
 </div>
 
 <div class="form-group">
-    <label for="password">Password</label>
+    <label for="password">Parol</label>
     <input type="password" name="password" id="password" class="form-control">
 </div>
 
 <div class="form-group">
-    <label for="role">Role</label>
+    <label for="role">Rolu</label>
     <select name="role" id="role" class="form-control">
         <option value="admin" {{ (old('role') ?? ($user->role ?? '')) == 'admin' ? 'selected' : '' }}>Admin</option>
         <option value="manager" {{ (old('role') ?? ($user->role ?? '')) == 'manager' ? 'selected' : '' }}>Manager</option>
-        <option value="staff" {{ (old('role') ?? ($user->role ?? '')) == 'staff' ? 'selected' : '' }}>Staff</option>
+        <option value="staff" {{ (old('role') ?? ($user->role ?? '')) == 'staff' ? 'selected' : '' }}>Xodim</option>
     </select>
 </div>
 
@@ -28,4 +28,4 @@
 </div>
 
 <button type="submit" class="btn btn-primary">{{ $submitButtonText }}</button>
-<a href="{{ route('users.index') }}" class="btn btn-secondary">Cancel</a>
+<a href="{{ route('users.index') }}" class="btn btn-secondary">Bekor qilish</a>

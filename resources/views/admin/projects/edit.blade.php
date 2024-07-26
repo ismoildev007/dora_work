@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="container">
-        <h1>Edit Project</h1>
+        <h1>Loyihani Tahrirlash</h1>
         <form action="{{ route('projects.update', $project->id) }}" method="POST" enctype="multipart/form-data" onsubmit="updateEditorContent()">
             @csrf
             @method('PUT')
             <div class="form-group">
-                <label for="name">Name</label>
+                <label for="name">Nomi</label>
                 <input type="text" name="name" class="form-control" id="name" value="{{ $project->name }}" required>
             </div>
             <div class="mt-3">
@@ -15,7 +15,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="header-title">Description</h4>
+                                <h4 class="header-title">Tavsif</h4>
                                 <div id="editor_uz" style="height: 300px;">
                                     <!-- Quill editor content -->
                                 </div>
@@ -26,15 +26,15 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="start_date">Start Date</label>
+                <label for="start_date">Boshlanish Sanasi</label>
                 <input type="date" name="start_date" class="form-control" id="start_date" value="{{ $project->start_date }}">
             </div>
             <div class="form-group">
-                <label for="end_date">End Date</label>
+                <label for="end_date">Tugash Sanasi</label>
                 <input type="date" name="end_date" class="form-control" id="end_date" value="{{ $project->end_date }}">
             </div>
             <div class="form-group">
-                <label for="client_id">Client</label>
+                <label for="client_id">Mijoz</label>
                 <select name="client_id" class="form-control" id="client_id">
                     @foreach($clients as $client)
                         <option value="{{ $client->id }}" {{ $project->client_id == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
@@ -42,7 +42,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="manager_id">Manager</label>
+                <label for="manager_id">Boshqaruvchi</label>
                 <select name="manager_id" class="form-control" id="manager_id">
                     @foreach($managers as $manager)
                         <option value="{{ $manager->id }}" {{ $project->manager_id == $manager->id ? 'selected' : '' }}>{{ $manager->name }}</option>
@@ -50,27 +50,27 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="status">Status</label>
+                <label for="status">Holat</label>
                 <select name="status" class="form-control" id="status" required>
-                    <option value="planned" {{ $project->status == 'planned' ? 'selected' : '' }}>Planned</option>
-                    <option value="active" {{ $project->status == 'active' ? 'selected' : '' }}>Active</option>
-                    <option value="completed" {{ $project->status == 'completed' ? 'selected' : '' }}>Completed</option>
-                    <option value="on_hold" {{ $project->status == 'on_hold' ? 'selected' : '' }}>On Hold</option>
+                    <option value="planned" {{ $project->status == 'planned' ? 'selected' : '' }}>Rejalashtirilgan</option>
+                    <option value="active" {{ $project->status == 'active' ? 'selected' : '' }}>Faol</option>
+                    <option value="completed" {{ $project->status == 'completed' ? 'selected' : '' }}>Tamamlangan</option>
+                    <option value="on_hold" {{ $project->status == 'on_hold' ? 'selected' : '' }}>To'xtatilgan</option>
                 </select>
             </div>
             <div class="row form-group">
                 @foreach($project->images as $image)
                     <div class="col-md-3">
-                        <img src="{{ asset('storage/' . $image->image) }}" alt="Activity Image" class="img-thumbnail">
-{{--                        <form action="{{ route('project-images.destroy', $image->id) }}" method="POST">--}}
-{{--                            @csrf--}}
-{{--                            @method('DELETE')--}}
-{{--                            <button type="submit" class="btn btn-danger btn-sm mt-2">Delete</button>--}}
-{{--                        </form>--}}
+                        <img src="{{ asset('storage/' . $image->image) }}" alt="Loyihaning Rasmi" class="img-thumbnail">
+                        {{-- <form action="{{ route('project-images.destroy', $image->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm mt-2">O'chirish</button>
+                        </form> --}}
                     </div>
                 @endforeach
             </div>
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" class="btn btn-primary">Yangilash</button>
         </form>
     </div>
 
@@ -86,7 +86,7 @@
             document.getElementById('description_uz').value = editorUz.root.innerHTML;
         }
 
-        // Initialize the editor with existing content for edit form
+        // Edit forma uchun mavjud kontent bilan tahrirlagichni boshlang
         editorUz.root.innerHTML = document.getElementById('description_uz').value;
     </script>
 @endsection

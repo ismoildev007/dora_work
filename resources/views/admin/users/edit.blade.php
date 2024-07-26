@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Edit User</h1>
+        <h1>Foydalanuchi ma'lumotini tahrirlash</h1>
         <form action="{{ route('users.update', $user) }}" method="POST">
             @csrf
             @method('PUT')
