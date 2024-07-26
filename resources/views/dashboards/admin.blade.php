@@ -6,8 +6,8 @@
 <div class="container">
     <h1>Reports</h1>
 
-    <!-- Department Filter -->
-    <form id="filterForm" action="{{ route('admin.dashboard') }}" method="GET" class="">
+    <!-- Department and Period Filter -->
+    <form id="filterForm" action="{{ route('admin.dashboard') }}" method="GET" class="mb-3">
         <div class="form-group">
             <label for="department_id">Select Department:</label>
             <select id="department_id" name="department_id" class="form-control" onchange="document.getElementById('filterForm').submit();">
@@ -19,10 +19,19 @@
                 @endforeach
             </select>
         </div>
+        <div class="form-group">
+            <label for="period">Select Period:</label>
+            <select id="period" name="period" class="form-control" onchange="document.getElementById('filterForm').submit();">
+                <option value="monthly" {{ request('period') == 'monthly' ? 'selected' : '' }}>Monthly</option>
+                <option value="quarterly" {{ request('period') == 'quarterly' ? 'selected' : '' }}>Quarterly</option>
+                <option value="semi-annual" {{ request('period') == 'semi-annual' ? 'selected' : '' }}>Semi-Annual</option>
+                <option value="yearly" {{ request('period') == 'yearly' ? 'selected' : '' }}>Yearly</option>
+            </select>
+        </div>
     </form>
 
     <!-- Container for Chart -->
-    <canvas id="reportChart" width="300" height="100"></canvas>
+    <canvas id="reportChart" width="200" height="50"></canvas>
 
     <!-- Include Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -30,12 +39,12 @@
     <!-- Script to Render the Chart -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Example data, replace with your data
             var ctx = document.getElementById('reportChart').getContext('2d');
             var reportData = @json($reports); // Pass your reports data from Laravel
 
             // Prepare data for Chart.js
             var labels = reportData.map(report => report.date);
+            var targetData = reportData.map(report => parseFloat(report.target) || 0);
             var profitData = reportData.map(report => parseFloat(report.profit) || 0);
             var outlayData = reportData.map(report => parseFloat(report.outlay) || 0);
 
@@ -45,17 +54,24 @@
                     labels: labels,
                     datasets: [
                         {
+                            label: 'Target',
+                            data: targetData,
+                            backgroundColor: "green",
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        },
+                        {
                             label: 'Profit',
                             data: profitData,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
                             borderWidth: 1
                         },
                         {
                             label: 'Outlay',
                             data: outlayData,
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                            borderColor: 'rgba(255, 159, 64, 1)',
                             borderWidth: 1
                         }
                     ]

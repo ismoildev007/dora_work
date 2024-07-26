@@ -62,30 +62,37 @@ class ReportController extends Controller
 
     public function update(Request $request, Report $report)
     {
+        // Validate the request data
         $validated = $request->validate([
             'department_id' => 'required|exists:departments,id',
             'target' => 'required|numeric',
             'profit' => 'required|numeric',
             'outlay' => 'required|numeric',
-            'date' => 'required|date',
+            'date' => 'required|date_format:Y-m', // Ensure date format matches the expected format
         ]);
 
-        // Tekshirish: shu oydagi hisobot mavjudmi?
+        // Convert the date to 'Y-m' format for consistency
         $date = \Carbon\Carbon::parse($validated['date']);
+        $formattedDate = $date->format('Y-m');
+
+        // Check if a report exists for the same department and month, excluding the current report
         $exists = Report::where('department_id', $validated['department_id'])
-            ->whereYear('date', $date->year)
-            ->whereMonth('date', $date->month)
-            ->where('id', '!=', $report->id)
+            ->where('date', $formattedDate) // Use the formatted date for comparison
+            ->where('id', '!=', $report->id) // Exclude the current report ID
             ->exists();
 
+        // If a report already exists, redirect with an error
         if ($exists) {
             return redirect()->back()->withErrors(['date' => 'Bu oyda hisobot allaqachon kiritilgan. Iltimos, boshqa oyni tanlang.'])->withInput();
         }
 
+        // Update the report
         $report->update($validated);
 
+        // Redirect with success message
         return redirect()->route('reports.index')->with('success', 'Report updated successfully.');
     }
+
 
     public function destroy(Report $report)
     {

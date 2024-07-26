@@ -64,20 +64,44 @@ class AuthController extends Controller
     // Admin dashboard
     public function adminDashboard(Request $request)
     {
-        // Get the department_id from the request
+        // Get the department_id and period from the request
         $departmentId = $request->input('department_id');
+        $period = $request->input('period', 'monthly'); // Default to 'monthly'
 
         // Fetch all departments for the dropdown
         $departments = Department::all();
 
-        // Fetch reports based on department filter
-        if ($departmentId) {
-            $reports = Report::where('department_id', $departmentId)->get();
-        } else {
-            $reports = Report::all();
+        // Determine the date range based on the selected period
+        $startDate = now();
+        $endDate = now();
+
+        switch ($period) {
+            case 'quarterly':
+                $startDate->subMonths(2);
+                break;
+            case 'semi-annual':
+                $startDate->subMonths(5);
+                break;
+            case 'yearly':
+                $startDate->subYear();
+                break;
+            default: // 'monthly'
+                $startDate->subMonth();
+                break;
         }
-        return view('dashboards.admin', compact('reports', 'departments')); // Points to the admin dashboard view
+
+        // Fetch reports based on department filter and period
+        $query = Report::whereBetween('date', [$startDate->format('Y-m'), $endDate->format('Y-m')]);
+
+        if ($departmentId) {
+            $query->where('department_id', $departmentId);
+        }
+
+        $reports = $query->get();
+
+        return view('dashboards.admin', compact('reports', 'departments', 'period')); // Points to the admin dashboard view
     }
+
 
     // Staff dashboard
     public function staffDashboard()
