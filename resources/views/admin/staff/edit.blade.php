@@ -30,10 +30,6 @@
                 <label for="position">Lavozim</label>
                 <input type="text" name="position" class="form-control" id="position" value="{{ $staff->position }}" required>
             </div>
-            <div class="form-group">
-                <label for="phone_number">Telefon Raqami</label>
-                <input type="text" name="phone_number" class="form-control" id="phone_number" value="{{ $staff->phone_number }}" required>
-            </div>
             <button type="submit" class="btn btn-primary">Yangilash</button>
         </form>
     </div>

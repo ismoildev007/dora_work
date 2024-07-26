@@ -37,6 +37,7 @@ class UserController extends Controller
             'password' => 'required|string|min:8',
             'role' => 'required|string|in:admin,manager,staff',
             'status' => 'nullable|string',
+            'phone_number' => 'nullable|string',
         ]);
 
         $validatedData['password'] = Hash::make($validatedData['password']);
@@ -73,6 +74,7 @@ class UserController extends Controller
             'password' => 'nullable|string|min:8',
             'role' => 'required|string|in:admin,manager,staff',
             'status' => 'nullable|string',
+            'phone_number' => 'nullable|string',
         ]);
 
         if ($request->filled('password')) {

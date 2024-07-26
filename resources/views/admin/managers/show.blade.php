@@ -7,7 +7,8 @@
         <div class="card-body">
             <h4 class="card-title">{{ $manager->user->name }}</h4>
             <p><strong>Bo‘lim:</strong> {{ $manager->department }}</p>
-            <p><strong>Telefon Raqami:</strong> {{ $manager->phone_number }}</p>
+            <p><strong>Telefon Raqami:</strong> {{ $manager->user->phone_number }}</p>
+            <p><strong>Lavozimi:</strong> {{ $manager->position }}</p>
             <a href="{{ route('managers.index') }}" class="btn btn-secondary">Ro‘yxatga Qaytish</a>
             <a href="{{ route('managers.edit', $manager->id) }}" class="btn btn-warning">Tahrirlash</a>
             <form action="{{ route('managers.destroy', $manager->id) }}" method="POST" style="display:inline;">

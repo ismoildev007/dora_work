@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('managers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('department')->nullable();
-            $table->string('phone_number')->nullable();
+            $table->foreignId('department_id')->constrained('departments')->onDelete('cascade');
+            $table->string('position')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

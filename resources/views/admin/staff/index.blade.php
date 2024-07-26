@@ -25,7 +25,7 @@
                     <td>{{ $staff->user->name }}</td>
                     <td>{{ $staff->manager->name }}</td>
                     <td>{{ $staff->position }}</td>
-                    <td>{{ $staff->phone_number }}</td>
+                    <td>{{ $staff->user->phone_number }}</td>
                     <td>
                         <a href="{{ route('staffs.edit', $staff->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                         <form action="{{ route('staffs.destroy', $staff->id) }}" method="POST" style="display:inline;">

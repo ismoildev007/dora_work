@@ -13,13 +13,18 @@ class Manager extends Model
 
     protected $fillable = [
         'user_id',
-        'department',
-        'phone_number',
+        'department_id',
+        'position',
     ];
 
     public $timestamps = false;
 
     // Relationship with User (inverse one-to-one)
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');

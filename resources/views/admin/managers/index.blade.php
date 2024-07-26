@@ -1,41 +1,39 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Menejerlar</h1>
-    <a href="{{ route('managers.create') }}" class="btn btn-primary mb-3">Menejer Yaratish</a>
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-    <table class="table">
-        <thead>
+    <div class="container">
+        <h1>Managerlar ro'yxati</h1>
+        <a href="{{ route('managers.create') }}" class="btn btn-primary mb-3">Yangi Manager Qo'shish</a>
+        <table class="table">
+            <thead>
             <tr>
                 <th>ID</th>
                 <th>Foydalanuvchi</th>
-                <th>Bo‘lim</th>
+                <th>Bo'lim</th>
+                <th>Lavozimi</th>
                 <th>Telefon Raqami</th>
-                <th>Harakatlar</th>
+                <th>Amallar</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             @foreach($managers as $manager)
                 <tr>
                     <td>{{ $manager->id }}</td>
                     <td>{{ $manager->user->name }}</td>
-                    <td>{{ $manager->department }}</td>
-                    <td>{{ $manager->phone_number }}</td>
+                    <td>{{ $manager->department->name }}</td>
+                    <td>{{ $manager->position }}</td>
+                    <td>{{ $manager->user->phone_number }}</td>
                     <td>
-                        <a href="{{ route('managers.show', $manager->id) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                        <a href="{{ route('managers.edit', $manager->id) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                        <a href="{{ route('managers.edit', $manager->id) }}" class="btn btn-warning">Tahrirlash</a>
                         <form action="{{ route('managers.destroy', $manager->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                            <button type="submit" class="btn btn-danger">O'chirish</button>
                         </form>
                     </td>
                 </tr>
             @endforeach
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
 @endsection

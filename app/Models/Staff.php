@@ -13,7 +13,6 @@ class Staff extends Model
         'user_id',
         'manager_id',
         'position',
-        'phone_number',
     ];
 
     public $timestamps = false;

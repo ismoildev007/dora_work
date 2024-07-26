@@ -2,6 +2,10 @@
     <label for="name">Ism</label>
     <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $user->name ?? '') }}">
 </div>
+<div class="form-group">
+    <label for="phone_number">Telefon raqam</label>
+    <input type="text" name="phone_number" id="phone_number" class="form-control" value="{{ old('phone_number', $user->phone_number ?? '') }}">
+</div>
 
 <div class="form-group">
     <label for="email">Email</label>

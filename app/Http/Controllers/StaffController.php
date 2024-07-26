@@ -37,13 +37,25 @@ class StaffController extends Controller
         $this->authorize('create', Staff::class);
 
         $request->validate([
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'required|array',
+            'user_id.*' => 'exists:users,id',
             'manager_id' => 'nullable|exists:users,id',
             'position' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:20',
         ]);
 
-        Staff::create($request->all());
+        // Get the array of user IDs
+        $userIds = $request->input('user_id');
+        $managerId = $request->input('manager_id');
+        $position = $request->input('position');
+        $phoneNumber = $request->input('phone_number');
+
+        foreach ($userIds as $userId) {
+            Staff::create([
+                'user_id' => $userId,
+                'manager_id' => $managerId,
+                'position' => $position,
+            ]);
+        }
 
         return redirect()->route('staffs.index')->with('success', 'Staff created successfully.');
     }
@@ -54,7 +66,7 @@ class StaffController extends Controller
         $this->authorize('update', $staff);
 
         $managers = User::where('role', 'manager')->get();
-        $users = User::where('role', 'staff');
+        $users = User::where('role', 'staff')->get();
         return view('admin.staff.edit', compact(
             'staff',
             'managers',
@@ -71,7 +83,6 @@ class StaffController extends Controller
             'user_id' => 'required|exists:users,id',
             'manager_id' => 'nullable|exists:users,id',
             'position' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:20',
         ]);
 
         $staff->update($request->all());
