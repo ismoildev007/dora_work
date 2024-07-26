@@ -36,8 +36,8 @@ class AppServiceProvider extends ServiceProvider
                 12 => 'Dekabr'
             ];
     
-            $month = $this->month;
-            $year = $this->year;
+            $month = $this->month ;
+            $year = $this->year ;
     
             return "{$uzbekMonths[$month]} {$year}";
         });

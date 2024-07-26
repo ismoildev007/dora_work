@@ -5,81 +5,80 @@
 @section('content')
 <div class="container my-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="text-primary">Company Reports</h1>
+        <h1 class="text-primary">Kompaniya Hisobotlari</h1>
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group me-2" role="group">
-                <button type="button" class="btn btn-secondary" onclick="setPeriod('monthly')">Monthly</button>
-                <button type="button" class="btn btn-secondary" onclick="setPeriod('quarterly')">Quarterly</button>
-                <button type="button" class="btn btn-secondary" onclick="setPeriod('semi-annual')">Semi-Annual</button>
-                <button type="button" class="btn btn-secondary" onclick="setPeriod('yearly')">Yearly</button>
+                <button type="button" class="btn btn-secondary" onclick="setPeriod('monthly')">Oylik</button>
+                <button type="button" class="btn btn-secondary" onclick="setPeriod('quarterly')">Kvartal</button>
+                <button type="button" class="btn btn-secondary" onclick="setPeriod('semi-annual')">Yarim Yillik</button>
+                <button type="button" class="btn btn-secondary" onclick="setPeriod('yearly')">Yillik</button>
             </div>
             <div class="btn-group ms-2" role="group">
-                <!-- Dropdown for Chart Type Selection -->
                 <select id="chartType" class="form-select" onchange="changeChartType();">
-                    <option value="line" {{ request('chartType', 'line') === 'line' ? 'selected' : '' }}>Line Chart</option>
-                    <option value="bar" {{ request('chartType') === 'bar' ? 'selected' : '' }}>Bar Chart</option>
-                    <option value="radar" {{ request('chartType') === 'radar' ? 'selected' : '' }}>Radar Chart</option>
-                    <option value="pie" {{ request('chartType') === 'pie' ? 'selected' : '' }}>Pie Chart</option>
-                    <option value="doughnut" {{ request('chartType') === 'doughnut' ? 'selected' : '' }}>Doughnut Chart</option>
+                    <option value="line" {{ request('chartType', 'line') === 'line' ? 'selected' : '' }}>Chiziqli Diagramma</option>
+                    <option value="bar" {{ request('chartType') === 'bar' ? 'selected' : '' }}>Barda Diagramma</option>
+                    <option value="radar" {{ request('chartType') === 'radar' ? 'selected' : '' }}>Radar Diagramma</option>
+                    <option value="pie" {{ request('chartType') === 'pie' ? 'selected' : '' }}>Doira Diagramma</option>
+                    <option value="doughnut" {{ request('chartType') === 'doughnut' ? 'selected' : '' }}>Qovurdoq Diagramma</option>
                 </select>
             </div>
         </div>
     </div>
 
-    <!-- Department and Period Filter -->
+    <!-- Bo'lim va davr filtri -->
     <form id="filterForm" action="{{ route('admin.dashboard') }}" method="GET" class="row g-3 mb-5">
         <div class="col-md-6">
             <div class="form-floating">
                 <select id="department_id" name="department_id" class="form-select" onchange="document.getElementById('filterForm').submit();">
-                    <option value="">All Departments</option>
+                    <option value="">Barcha Bo'limlar</option>
                     @foreach($departments as $department)
                     <option value="{{ $department->id }}" {{ request('department_id') == $department->id ? 'selected' : '' }}>
                         {{ $department->name }}
                     </option>
                     @endforeach
                 </select>
-                <label for="department_id">Select Department</label>
+                <label for="department_id">Bo'limni Tanlang</label>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-floating">
                 <select id="period" name="period" class="form-select" onchange="document.getElementById('filterForm').submit();">
-                    <option value="monthly" {{ request('period') == 'monthly' ? 'selected' : '' }}>Monthly</option>
-                    <option value="quarterly" {{ request('period') == 'quarterly' ? 'selected' : '' }}>Quarterly</option>
-                    <option value="semi-annual" {{ request('period') == 'semi-annual' ? 'selected' : '' }}>Semi-Annual</option>
-                    <option value="yearly" {{ request('period') == 'yearly' ? 'selected' : '' }}>Yearly</option>
+                    <option value="monthly" {{ request('period') == 'monthly' ? 'selected' : '' }}>Oylik</option>
+                    <option value="quarterly" {{ request('period') == 'quarterly' ? 'selected' : '' }}>Kvartal</option>
+                    <option value="semi-annual" {{ request('period') == 'semi-annual' ? 'selected' : '' }}>Yarim Yillik</option>
+                    <option value="yearly" {{ request('period') == 'yearly' ? 'selected' : '' }}>Yillik</option>
                 </select>
-                <label for="period">Select Period</label>
+                <label for="period">Davrni Tanlang</label>
             </div>
         </div>
     </form>
 
-    <!-- Display Department and Period Info -->
+    <!-- Bo'lim va davr ma'lumotlarini ko'rsatish -->
     <div class="mb-4">
         <h4 class="text-muted">
-            {{ $departmentId ? $departments->firstWhere('id', $departmentId)->name : 'All Departments' }}
-            - {{ ucfirst($period) }} Report
+            {{ $departmentId ? $departments->firstWhere('id', $departmentId)->name : 'Barcha Bo\'limlar' }}
+            - {{ ucfirst($period) }} Hisoboti
         </h4>
     </div>
 
-    <!-- Container for Chart -->
+    <!-- Diagramma uchun konteyner -->
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <canvas id="reportChart" width="400" height="150"></canvas>
         </div>
     </div>
 
-    <!-- Table for Reports -->
+    <!-- Hisobotlar uchun jadval -->
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>Target</th>
-                    <th>Profit</th>
-                    <th>Outlay</th>
+                    <th>Sana</th>
+                    <th>Ma'qsad</th>
+                    <th>Foyda</th>
+                    <th>Chiqarish</th>
                     @if(!$departmentId)
-                    <th>Department</th> <!-- Show department column when viewing all departments -->
+                    <th>Bo'lim</th> <!-- Barcha bo'limlarni ko'rsatishda bo'lim ustunini ko'rsatish -->
                     @endif
                 </tr>
             </thead>
@@ -91,41 +90,71 @@
                     <td>{{ $report->profit }}</td>
                     <td>{{ $report->outlay }}</td>
                     @if(!$departmentId)
-                    <td>{{ $report->department_name }}</td> <!-- Display department name -->
+                    <td>{{ $report->department_name }}</td> <!-- Bo'lim nomini ko'rsatish -->
                     @endif
                 </tr>
                 @endforeach
+
+                <!-- Future months section -->
+                @if($futureTargets->isNotEmpty())
+                @foreach($futureTargets as $report)
+                <tr class="table-secondary">
+                    <td>{{ $report->date }}</td>
+                    <td>{{ $report->target }}</td>
+                    <td>{{ $report->profit }}</td>
+                    <td>{{ $report->outlay }}</td>
+                    @if(!$departmentId)
+                    <td>{{ $report->department_name }}</td> <!-- Bo'lim nomini ko'rsatish -->
+                    @endif
+                </tr>
+                @endforeach
+                @endif
             </tbody>
         </table>
     </div>
 
-    <!-- Include Chart.js -->
+    <!-- Chart.js kutubxonasini qo'shish -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Script to Render the Chart -->
+    <!-- Diagrammani chizish uchun script -->
     <script>
-        let chartInstance; // Declare the chart instance globally for re-use
+        let chartInstance; // Diagramma obyektini qayta ishlatish uchun global o'zgaruvchi
 
         document.addEventListener('DOMContentLoaded', function() {
             var ctx = document.getElementById('reportChart').getContext('2d');
-            var reportData = @json($reports); // Pass your reports data from Laravel
+            var reportData = @json($reports); // Laraveldan hisobot ma'lumotlarini o'tkazish
+            var futureData = @json($futureTargets); // Laraveldan kelajak ma'lumotlarini o'tkazish
 
-            // Prepare data for Chart.js
-            var labels = reportData.map(report => report.date);
-            var targetData = reportData.map(report => parseFloat(report.target) || 0);
-            var profitData = reportData.map(report => parseFloat(report.profit) || 0);
-            var outlayData = reportData.map(report => parseFloat(report.outlay) || 0);
+            // Chart.js uchun ma'lumotlarni tayyorlash
+            var labels = [];
+            var targetData = [];
+            var profitData = [];
+            var outlayData = [];
 
-            // Get the selected chart type from the dropdown
+            reportData.forEach(report => {
+                labels.push(report.date);
+                targetData.push(parseFloat(report.target) || 0);
+                profitData.push(parseFloat(report.profit) || 0);
+                outlayData.push(parseFloat(report.outlay) || 0);
+            });
+
+            futureData.forEach(report => {
+                labels.push(report.date);
+                targetData.push(parseFloat(report.target) || 0);
+                profitData.push(parseFloat(report.profit) || 0);
+                outlayData.push(parseFloat(report.outlay) || 0);
+            });
+
+            // Ro'yxatdan tanlangan diagramma turini olish
             var initialChartType = document.getElementById('chartType').value;
 
-            // Initialize the chart with the default type (line or the selected type)
+            // Diagrammani dastlabki turda (chiziqli yoki tanlangan turda) sozlash
             chartInstance = new Chart(ctx, {
                 type: initialChartType,
                 data: {
                     labels: labels,
                     datasets: [{
-                            label: 'Target',
+                            label: 'Ma\'qsad',
                             data: targetData,
                             backgroundColor: "rgba(53, 244, 91, 0.2)",
                             borderColor: 'rgb(71,220,100)',
@@ -133,7 +162,7 @@
                             fill: true
                         },
                         {
-                            label: 'Profit',
+                            label: 'Foyda',
                             data: profitData,
                             backgroundColor: 'rgba(75, 192, 192, 0.2)',
                             borderColor: 'rgba(75, 192, 192, 1)',
@@ -141,7 +170,7 @@
                             fill: true
                         },
                         {
-                            label: 'Outlay',
+                            label: 'Chiqarish',
                             data: outlayData,
                             backgroundColor: 'rgba(237, 15, 48, 0.2)',
                             borderColor: 'rgba(237, 15, 48, 0.67)',
@@ -158,7 +187,7 @@
                         },
                         title: {
                             display: true,
-                            text: '{{ $departmentId ? $departments->firstWhere("id", $departmentId)->name : "All Departments" }} - {{ ucfirst($period) }} Performance'
+                            text: '{{ $departmentId ? $departments->firstWhere("id", $departmentId)->name : "Barcha Bo\'limlar" }} - {{ ucfirst($period) }} Ishlash'
                         }
                     },
                     scales: {
@@ -170,7 +199,7 @@
                         y: {
                             beginAtZero: true,
                             grid: {
-                                color: 'rgba(200, 200, 200, 0.3)'
+                                display: false
                             }
                         }
                     }
@@ -178,28 +207,64 @@
             });
         });
 
-        // Helper function to set the period in the filter form and submit
-        function setPeriod(period) {
-            document.getElementById('period').value = period;
-            document.getElementById('filterForm').submit();
-        }
-
-        // Function to change the chart type
+        // Diagramma turini o'zgartirish uchun funksiyani qo'shish
         function changeChartType() {
-            var selectedType = document.getElementById('chartType').value;
+            var newType = document.getElementById('chartType').value;
+            if (chartInstance) {
+                chartInstance.destroy(); // Eski diagrammani o'chirish
+            }
+            var ctx = document.getElementById('reportChart').getContext('2d');
+            var reportData = @json($reports);
+            var futureData = @json($futureTargets);
 
-            // Destroy the current chart instance to create a new one
-            chartInstance.destroy();
+            var labels = [];
+            var targetData = [];
+            var profitData = [];
+            var outlayData = [];
 
-            // Recreate the chart with the new type
-            chartInstance = new Chart(document.getElementById('reportChart').getContext('2d'), {
-                type: selectedType,
+            reportData.forEach(report => {
+                labels.push(report.date);
+                targetData.push(parseFloat(report.target) || 0);
+                profitData.push(parseFloat(report.profit) || 0);
+                outlayData.push(parseFloat(report.outlay) || 0);
+            });
+
+            futureData.forEach(report => {
+                labels.push(report.date);
+                targetData.push(parseFloat(report.target) || 0);
+                profitData.push(parseFloat(report.profit) || 0);
+                outlayData.push(parseFloat(report.outlay) || 0);
+            });
+
+            chartInstance = new Chart(ctx, {
+                type: newType,
                 data: {
-                    labels: chartInstance.data.labels, // Use the existing labels
-                    datasets: chartInstance.data.datasets.map(dataset => ({
-                        ...dataset,
-                        borderColor: dataset.borderColor
-                    })), // Use the existing datasets
+                    labels: labels,
+                    datasets: [{
+                            label: 'Ma\'qsad',
+                            data: targetData,
+                            backgroundColor: "rgba(53, 244, 91, 0.2)",
+                            borderColor: 'rgb(71,220,100)',
+                            borderWidth: 2,
+                            fill: true
+                        },
+                        {
+                            label: 'Foyda',
+                            data: profitData,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 2,
+                            fill: true
+                        },
+                        {
+                            label: 'Chiqarish',
+                            data: outlayData,
+                            backgroundColor: 'rgba(237, 15, 48, 0.2)',
+                            borderColor: 'rgba(237, 15, 48, 0.67)',
+                            borderWidth: 2,
+                            fill: true
+                        }
+                    ]
                 },
                 options: {
                     responsive: true,
@@ -209,7 +274,7 @@
                         },
                         title: {
                             display: true,
-                            text: '{{ $departmentId ? $departments->firstWhere("id", $departmentId)->name : "All Departments" }} - {{ ucfirst($period) }} Performance'
+                            text: '{{ $departmentId ? $departments->firstWhere("id", $departmentId)->name : "Barcha Bo\'limlar" }} - {{ ucfirst($period) }} Ishlash'
                         }
                     },
                     scales: {
@@ -221,14 +286,19 @@
                         y: {
                             beginAtZero: true,
                             grid: {
-                                color: 'rgba(200, 200, 200, 0.3)'
+                                display: false
                             }
                         }
                     }
                 }
             });
         }
-    </script>
 
+        // Periodni o'zgartirish uchun funksiyani qo'shish
+        function setPeriod(period) {
+            document.getElementById('period').value = period;
+            document.getElementById('filterForm').submit();
+        }
+    </script>
 </div>
 @endsection

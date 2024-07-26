@@ -19,6 +19,13 @@ class Activity extends Model
         'project_id',
     ];
 
+    // App\Models\Activity.php
+
+    public function staff()
+    {
+        return $this->belongsToMany(User::class, 'activity_user', 'activity_id', 'user_id');
+    }
+
     // Relationship with Staff (inverse one-to-many)
     public function user()
     {
@@ -35,5 +42,10 @@ class Activity extends Model
     public function images()
     {
         return $this->hasMany(ActivityImage::class, 'activity_id', 'id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'activity_user');
     }
 }

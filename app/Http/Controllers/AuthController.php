@@ -63,55 +63,75 @@ class AuthController extends Controller
 
     // Admin dashboard
     public function adminDashboard(Request $request)
-    {
-        // Get the department_id and period from the request
-        $departmentId = $request->input('department_id');
-        $period = $request->input('period', 'monthly'); // Default to 'monthly'
+{
+    // Get the department_id and period from the request
+    $departmentId = $request->input('department_id');
+    $period = $request->input('period', 'monthly'); // Default to 'monthly'
 
-        // Fetch all departments for the dropdown
-        $departments = Department::all();
+    // Fetch all departments for the dropdown
+    $departments = Department::all();
 
-        // Determine the date range based on the selected period
-        $endDate = now(); // Current date
-        $startDate = clone $endDate; // Clone to calculate the start date
+    // Determine the date range based on the selected period
+    $endDate = now(); // Current date
+    $startDate = clone $endDate; // Clone to calculate the start date
 
-        switch ($period) {
-            case 'quarterly':
-                $startDate->subMonths(3); // Include current and last 2 months (total 3 months)
-                break;
-            case 'semi-annual':
-                $startDate->subMonths(6); // Include current and last 5 months (total 6 months)
-                break;
-            case 'yearly':
-                $startDate->subYear()->addMonth(); // Include the last 12 months, from the start of the current month last year
-                break;
-            default: // 'monthly'
-                $startDate->subMonth(); // Last full month
-                break;
-        }
-
-        // Fetch reports based on department filter and period
-        $query = Report::whereBetween('date', [$startDate->startOfMonth(), $endDate->endOfMonth()]);
-
-        if ($departmentId) {
-            $query->where('department_id', $departmentId);
-        }
-
-        // Include the department name and order by date
-        $reports = $query->with('department')->orderBy('date', 'asc')->get();
-
-        // Format report dates for display and include department name if not filtered by a specific department
-        $reports->transform(function ($report) use ($departmentId) {
-            $report->date = \Carbon\Carbon::parse($report->date)->format('F Y'); // Month name and year
-            if (!$departmentId) {
-                // Append department name if not filtered by department
-                $report->department_name = $report->department->name;
-            }
-            return $report;
-        });
-
-        return view('dashboards.admin', compact('reports', 'departments', 'period', 'departmentId')); // Pass departmentId for displaying
+    switch ($period) {
+        case 'quarterly':
+            $startDate->subMonths(3); // Include current and last 2 months (total 3 months)
+            break;
+        case 'semi-annual':
+            $startDate->subMonths(6); // Include current and last 5 months (total 6 months)
+            break;
+        case 'yearly':
+            $startDate->subYear()->addMonth(); // Include the last 12 months, from the start of the current month last year
+            break;
+        default: // 'monthly'
+            $startDate->subMonth(); // Last full month
+            break;
     }
+
+    // Fetch reports based on department filter and period
+    $query = Report::whereBetween('date', [$startDate->startOfMonth(), $endDate->endOfMonth()]);
+
+    if ($departmentId) {
+        $query->where('department_id', $departmentId);
+    }
+
+    // Include the department name and order by date
+    $reports = $query->with('department')->orderBy('date', 'asc')->get();
+
+    // Fetch future targets from the reports table if they exist
+    $futureDateEnd = $endDate->copy()->addMonths(3); // Look ahead 3 months
+    $futureTargets = Report::whereBetween('date', [$endDate->format('Y-m-d'), $futureDateEnd->format('Y-m-d')])
+        ->when($departmentId, function ($query) use ($departmentId) {
+            return $query->where('department_id', $departmentId);
+        })
+        ->with('department')
+        ->orderBy('date', 'desc')
+        ->get();
+
+    // Format report dates for display and include department name if not filtered by a specific department
+    $reports->transform(function ($report) use ($departmentId) {
+        $report->date = \Carbon\Carbon::parse($report->date)->format('F Y'); // Month name and year
+        if (!$departmentId) {
+            $report->department_name = $report->department->name;
+        }
+        return $report;
+    });
+
+    $futureTargets->transform(function ($report) use ($departmentId) {
+        $report->date = \Carbon\Carbon::parse($report->date)->format('F Y'); // Month name and year
+        if (!$departmentId) {
+            $report->department_name = $report->department->name;
+        }
+        return $report;
+    });
+
+    return view('dashboards.admin', compact('reports', 'departments', 'period', 'departmentId', 'futureTargets')); // Ensure futureTargets is passed to the view
+}
+
+    
+
 
 
 

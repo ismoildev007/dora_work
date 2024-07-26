@@ -24,30 +24,37 @@
             </div>
 
             <div class="form-group">
-                <label for="user_id">Xodim</label>
-                <select name="user_id" class="form-control" id="user_id">
+                <label for="user_ids">Xodimlar</label>
+                <select name="user_ids[]" class="form-control" id="user_ids" multiple>
                     @foreach($users as $staff)
-                        <option value="{{ $staff->id }}" {{ $activity->user_id == $staff->id ? 'selected' : '' }}>{{ $staff->name }}</option>
+                        <option value="{{ $staff->id }}" {{ $activity->users->contains($staff->id) ? 'selected' : '' }}>
+                            {{ $staff->name }}
+                        </option>
                     @endforeach
                 </select>
             </div>
 
-{{--            <div class="form-group">--}}
-{{--                <label for="client_id">Mijoz</label>--}}
-{{--                <select name="client_id" class="form-control" id="client_id">--}}
-{{--                    <option value="">Mijozni Tanlang</option>--}}
-{{--                    @foreach($clients as $client)--}}
-{{--                        <option value="{{ $client->id }}" {{ $activity->client_id == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>--}}
-{{--                    @endforeach--}}
-{{--                </select>--}}
-{{--            </div>--}}
+            {{-- Uncomment and adjust the client section if needed --}}
+            {{-- 
+            <div class="form-group">
+                <label for="client_id">Mijoz</label>
+                <select name="client_id" class="form-control" id="client_id">
+                    <option value="">Mijozni Tanlang</option>
+                    @foreach($clients as $client)
+                        <option value="{{ $client->id }}" {{ $activity->client_id == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            --}}
 
             <div class="form-group">
                 <label for="project_id">Loyiha</label>
                 <select name="project_id" class="form-control" id="project_id">
                     <option value="">Loyihani Tanlang</option>
                     @foreach($projects as $project)
-                        <option value="{{ $project->id }}" {{ $activity->project_id == $project->id ? 'selected' : '' }}>{{ $project->name }}</option>
+                        <option value="{{ $project->id }}" {{ $activity->project_id == $project->id ? 'selected' : '' }}>
+                            {{ $project->name }}
+                        </option>
                     @endforeach
                 </select>
             </div>
@@ -97,13 +104,14 @@
             document.getElementById('description_uz').value = editorUz.root.innerHTML;
         }
 
-        // Tahrir shakli uchun mavjud mazmun bilan tahrirlashni boshlash
-        editorUz.root.innerHTML = document.getElementById('description_uz').value;
+        // Initialize the editor with existing content
+        document.addEventListener('DOMContentLoaded', function () {
+            editorUz.root.innerHTML = document.getElementById('description_uz').value;
+        });
 
-        // updateEditorContent() funksiyasining to'g'ri chaqirilishini ta'minlash
+        // Ensure the content is updated on form submission
         document.querySelector('form').addEventListener('submit', function (event) {
             updateEditorContent();
         });
     </script>
-
 @endsection
