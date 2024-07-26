@@ -30,6 +30,12 @@
 <div class="container">
     <h1>Attendance Records</h1>
     <a href="{{ route('attendance.create') }}" class="btn btn-primary">Record Attendance</a>
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <table class="table mt-4">
         <thead>
             <tr>

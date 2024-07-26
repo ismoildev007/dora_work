@@ -4,8 +4,11 @@
 <div class="container">
     <h1>Mijozlar</h1>
     <a href="{{ route('clients.create') }}" class="btn btn-primary mb-3">Mijoz Yaratish</a>
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     @endif
     <table class="table">
         <thead>
@@ -27,7 +30,7 @@
                     <td>{{ $client->contact_person }}</td>
                     <td>{{ $client->email }}</td>
                     <td>{{ $client->phone_number }}</td>
-                    <td>{{ $client->address }}</td>
+                    <td>{!! $client->address !!}</td>
                     <td>
                         <a href="{{ route('clients.show', $client->id) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
                         <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a>

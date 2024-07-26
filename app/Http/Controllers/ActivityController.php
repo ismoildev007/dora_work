@@ -26,30 +26,28 @@ class ActivityController extends Controller
     public function create()
     {
         $this->authorize('create', Activity::class);
-        $staffs = Staff::all();
+        $users = User::where('role', 'staff')->get();
         $projects = Project::all();
-//        $clients = Client::all();
         return view('admin.activities.create', compact(
-            'staffs',
+            'users',
             'projects',
-//            'clients'
         ));
     }
 
     // Store a newly created activity in storage
     public function store(Request $request)
     {
+//        dd($request->all());
+
         $this->authorize('create', Activity::class);
         $request->validate([
             'description' => 'nullable|string',
-            'activity_type' => 'nullable|in:meeting,call,email,task,other',
+            'activity_type' => 'nullable|string',
             'activity_date' => 'nullable|string',
-            'staff_id' => 'nullable|exists:staff,id',
-//            'client_id' => 'nullable|exists:clients,id',
+            'user_id' => 'nullable|exists:users,id',
             'project_id' => 'nullable|exists:projects,id',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
-
 //        dd($request->all());
 
         $activity = Activity::create($request->except('images'));
@@ -75,14 +73,12 @@ class ActivityController extends Controller
     public function edit(Activity $activity)
     {
         $this->authorize('update', $activity);
-        $staffs = Staff::all();
-//        $clients = Client::all();
+        $users = User::where('role', 'staff')->get();
         $projects = Project::all();
         return view('admin.activities.edit', compact(
             'activity',
-            'staffs',
+            'users',
             'projects',
-//            'clients'
         ));
     }
 
@@ -94,8 +90,7 @@ class ActivityController extends Controller
             'description' => 'nullable|string',
             'activity_type' => 'required|in:meeting,call,email,task,other',
             'activity_date' => 'required|date',
-            'staff_id' => 'nullable|exists:staff,id',
-//            'client_id' => 'nullable|exists:clients,id',
+            'user_id' => 'nullable|exists:users,id',
             'project_id' => 'nullable|exists:projects,id',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);

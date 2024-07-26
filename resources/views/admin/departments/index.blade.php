@@ -4,6 +4,12 @@
     <div class="container">
         <h1>Bo‘limlar</h1>
         <a href="{{ route('departments.create') }}" class="btn btn-primary">Bo‘lim Yaratish</a>
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <table class="table">
             <thead>
             <tr>

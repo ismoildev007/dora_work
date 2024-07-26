@@ -30,8 +30,14 @@
 <div class="container">
     <h1>Faoliyatlar</h1>
     @can('create', App\Models\Activity::class)
-    <a href="{{ route('activities.create') }}" class="btn btn-primary">Faoliyat Yaratish</a>
+    <a href="{{ route('activities.create') }}" class="btn btn-primary">Vazifalar Yaratish</a>
     @endcan
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <table class="table mt-4">
         <thead>
             <tr>
@@ -49,10 +55,10 @@
             @foreach($activities as $activity)
             <tr>
                 <td>{{ $activity->id }}</td>
-                <td>{{ $activity->description }}</td>
+                <td>{!! $activity->description !!}</td>
                 <td>{{ $activity->activity_type }}</td>
                 <td>{{ $activity->activity_date }}</td>
-                <td>{{ $activity->staff->user->name ?? 'Mavjud Emas' }}</td>
+                <td>{{ $activity->user->name ?? 'Mavjud Emas' }}</td>
                 {{-- <td>{{ $activity->client->name ?? 'Mavjud Emas' }}</td>--}}
                 <td>{{ $activity->project->name ?? 'Mavjud Emas' }}</td>
                 <td>

@@ -48,21 +48,48 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                 </a>
             </li>
             @endcan
-            @can('view-activity')
-            <li class="menu-item">
-                <a href="{{ route('activities.index') }}" class="menu-link waves-effect waves-light">
-                    <span class="menu-icon"><i class="bx bxl-wordpress"></i></span>
-                    <span class="menu-text"> Faoliyat </span>
-                </a>
-            </li>
+            @can('view-department')
+                <li class="menu-item">
+                    <a href="{{ route('departments.index') }}" class="menu-link">
+                        <span class="menu-icon"><i class="bx bx-detail"></i></span>
+
+                        <span class="menu-text">Bo'limlar</span>
+                    </a>
+                </li>
+            @endcan
+            @can('view-manager')
+                <li class="menu-item">
+                    <a href="{{ route('managers.index') }}" class="menu-link">
+                        <span class="menu-icon"><i class="bx bx-magnet"></i></span>
+
+                        <span class="menu-text">Manager</span>
+                    </a>
+                </li>
             @endcan
             @can('view-client')
-            <li class="menu-item">
-                <a href="{{ route('clients.index') }}" class="menu-link waves-effect waves-light">
-                    <span class="menu-icon"><i class="bx bx-clipboard"></i></span>
-                    <span class="menu-text"> Mijozlar </span>
-                </a>
-            </li>
+                <li class="menu-item">
+                    <a href="{{ route('clients.index') }}" class="menu-link waves-effect waves-light">
+                        <span class="menu-icon"><i class="bx bx-clipboard"></i></span>
+                        <span class="menu-text"> Mijozlar </span>
+                    </a>
+                </li>
+            @endcan
+            @can('view-project')
+                <li class="menu-item">
+                    <a href="{{ route('projects.index') }}" class="menu-link">
+                        <span class="menu-icon"><i class="bx bxl-product-hunt"></i></span>
+
+                        <span class="menu-text">Loyihalar</span>
+                    </a>
+                </li>
+            @endcan
+            @can('view-activity')
+                <li class="menu-item">
+                    <a href="{{ route('activities.index') }}" class="menu-link waves-effect waves-light">
+                        <span class="menu-icon"><i class="bx bxl-wordpress"></i></span>
+                        <span class="menu-text"> Vazifalar </span>
+                    </a>
+                </li>
             @endcan
 
             <!-- <li class="menu-item">
@@ -72,33 +99,6 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                     <span class="menu-text">Xabarlar</span>
                 </a>
             </li> -->
-            @can('view-project')
-            <li class="menu-item">
-                <a href="{{ route('projects.index') }}" class="menu-link">
-                    <span class="menu-icon"><i class="bx bxl-product-hunt"></i></span>
-
-                    <span class="menu-text">Loyihalar</span>
-                </a>
-            </li>
-            @endcan
-            @can('view-manager')
-            <li class="menu-item">
-                <a href="{{ route('managers.index') }}" class="menu-link">
-                    <span class="menu-icon"><i class="bx bx-magnet"></i></span>
-
-                    <span class="menu-text">Manager</span>
-                </a>
-            </li>
-            @endcan
-            @can('view-department')
-            <li class="menu-item">
-                <a href="{{ route('departments.index') }}" class="menu-link">
-                    <span class="menu-icon"><i class="bx bx-detail"></i></span>
-
-                    <span class="menu-text">Bo'limlar</span>
-                </a>
-            </li>
-            @endcan
             @can('view-report')
             <li class="menu-item">
                 <a href="{{ route('reports.index') }}" class="menu-link">
@@ -175,45 +175,16 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                     </a>
                 </li>
 
-                <li class="dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                        <i class="mdi mdi-magnify font-size-24"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-animated dropdown-menu-end dropdown-lg p-0">
-                        <form class="p-3">
-                            <input type="search" class="form-control" placeholder="Qidirish..." aria-label="Qidirish">
-                        </form>
-                    </div>
-                </li>
-
-                <li class="dropdown d-none d-md-inline-block">
-                    <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                        <img src="/admin-panel/assets/images/flags/us.jpg" alt="user-image" class="me-0 me-sm-1" height="18">
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-
-                        <!-- element -->
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            <img src="/admin-panel/assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Nemischa</span>
-                        </a>
-
-                        <!-- element -->
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            <img src="/admin-panel/assets/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italyancha</span>
-                        </a>
-
-                        <!-- element -->
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            <img src="/admin-panel/assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Ispancha</span>
-                        </a>
-
-                        <!-- element -->
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            <img src="/admin-panel/assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Ruscha</span>
-                        </a>
-
-                    </div>
-                </li>
+{{--                <li class="dropdown">--}}
+{{--                    <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">--}}
+{{--                        <i class="mdi mdi-magnify font-size-24"></i>--}}
+{{--                    </a>--}}
+{{--                    <div class="dropdown-menu dropdown-menu-animated dropdown-menu-end dropdown-lg p-0">--}}
+{{--                        <form class="p-3">--}}
+{{--                            <input type="search" class="form-control" placeholder="Qidirish..." aria-label="Qidirish">--}}
+{{--                        </form>--}}
+{{--                    </div>--}}
+{{--                </li>--}}
 
                 <li class="dropdown notification-list">
                     <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">

@@ -59,6 +59,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Staff::class, 'user_id', 'id');
     }
+    public function activity()
+    {
+        return $this->hasMany(Activity::class);
+    }
 
     // Relationship with Messages (one-to-many)
     public function messages()
