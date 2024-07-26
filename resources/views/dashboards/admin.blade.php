@@ -56,22 +56,22 @@
                         {
                             label: 'Target',
                             data: targetData,
-                            backgroundColor: "green",
-                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: "rgb(53,244,91)",
+                            borderColor: 'rgb(71,220,100)',
                             borderWidth: 1
                         },
                         {
                             label: 'Profit',
                             data: profitData,
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 1)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
                             borderWidth: 1
                         },
                         {
                             label: 'Outlay',
                             data: outlayData,
-                            backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                            borderColor: 'rgba(255, 159, 64, 1)',
+                            backgroundColor: 'rgba(237,15,48,0.67)',
+                            borderColor: 'rgba(237,15,48,0.67)',
                             borderWidth: 1
                         }
                     ]
