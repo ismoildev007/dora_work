@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Faoliyat Yaratish</h1>
+        <h1>Vazifalar biriktirish</h1>
         <form action="{{ route('activities.store') }}" method="POST" enctype="multipart/form-data" onsubmit="updateEditorContent()">
             @csrf
             <div class="mt-3">
@@ -11,45 +11,35 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="header-title">Tavsif</h4>
-                                <div id="editor_uz" style="height: 300px;">
-                                    <!-- Quill editor mazmuni -->
-                                </div>
+                                <div id="editor_uz" style="height: 300px;"></div>
                                 <input type="hidden" name="description" id="description_uz">
-                            </div> <!-- karta tanasining oxiri -->
-                        </div> <!-- karta oxiri -->
-                    </div><!-- ustun oxiri -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="activity_type">Faoliyat Turi</label>
+                <label for="activity_type">Vazifa Turi</label>
                 <select name="activity_type" id="activity_type" class="form-control" required>
-                    <option value="meeting">Uchrashuv</option>
-                    <option value="call">Qo'ng'iroq</option>
-                    <option value="email">Elektron Pochta</option>
-                    <option value="task">Vazifa</option>
-                    <option value="other">Boshqa</option>
+                    <option value="Figma">Figma chizish</option>
+                    <option value="Web-site">Web-site</option>
+                    <option value="Smm xizmati">Smm xizmati</option>
+                    <option value="Vide mantaj">Vide mantaj</option>
+                    <option value="Mobilo graf">Mobilo graf</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="activity_date">Faoliyat Sanasi</label>
+                <label for="activity_date">Qabul qilish sanasi (deadline)</label>
                 <input type="date" name="activity_date" id="activity_date" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="staff_id">Xodim</label>
-                <select name="staff_id" id="staff_id" class="form-control">
-                    @foreach($staffs as $staff)
-                        <option value="{{ $staff->id }}">{{ $staff->user->name }}</option>
+                <label for="user_id">Xodim</label>
+                <select name="user_id" id="user_id" class="form-control">
+                    @foreach($users as $staff)
+                        <option value="{{ $staff->id }}">{{ $staff->name }}</option>
                     @endforeach
                 </select>
             </div>
-{{--            <div class="form-group">--}}
-{{--                <label for="client_id">Mijoz</label>--}}
-{{--                <select name="client_id" id="client_id" class="form-control">--}}
-{{--                    @foreach($clients as $client)--}}
-{{--                        <option value="{{ $client->id }}">{{ $client->name }}</option>--}}
-{{--                    @endforeach--}}
-{{--                </select>--}}
-{{--            </div>--}}
             <div class="form-group">
                 <label for="project_id">Loyiha</label>
                 <select name="project_id" id="project_id" class="form-control">

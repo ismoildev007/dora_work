@@ -15,22 +15,15 @@ class Activity extends Model
         'description',
         'activity_type',
         'activity_date',
-        'staff_id',
-//        'client_id',
+        'user_id',
         'project_id',
     ];
 
     // Relationship with Staff (inverse one-to-many)
-    public function staff()
+    public function user()
     {
-        return $this->belongsTo(Staff::class, 'staff_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
-    // Relationship with Client (inverse one-to-many)
-//    public function client()
-//    {
-//        return $this->belongsTo(Client::class, 'client_id', 'id');
-//    }
 
     // Relationship with Project (inverse one-to-many)
     public function project()

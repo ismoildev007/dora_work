@@ -24,11 +24,10 @@
             </div>
 
             <div class="form-group">
-                <label for="staff_id">Xodim</label>
-                <select name="staff_id" class="form-control" id="staff_id">
-                    <option value="">Xodimni Tanlang</option>
-                    @foreach($staffs as $staff)
-                        <option value="{{ $staff->id }}" {{ $activity->staff_id == $staff->id ? 'selected' : '' }}>{{ $staff->name }}</option>
+                <label for="user_id">Xodim</label>
+                <select name="user_id" class="form-control" id="user_id">
+                    @foreach($users as $staff)
+                        <option value="{{ $staff->id }}" {{ $activity->user_id == $staff->id ? 'selected' : '' }}>{{ $staff->name }}</option>
                     @endforeach
                 </select>
             </div>

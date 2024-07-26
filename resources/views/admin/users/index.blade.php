@@ -5,8 +5,9 @@
         <h1>Foydalanuvchilar</h1>
         <a href="{{ route('users.create') }}" class="btn btn-primary">Foydalanuvchi Qoʻshish</a>
         @if (session('success'))
-            <div class="alert alert-success mt-2">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
         <table class="table table-bordered mt-2">
