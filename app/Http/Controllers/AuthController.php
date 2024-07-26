@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -60,9 +62,21 @@ class AuthController extends Controller
     }
 
     // Admin dashboard
-    public function adminDashboard()
+    public function adminDashboard(Request $request)
     {
-        return view('dashboards.admin'); // Points to the admin dashboard view
+        // Get the department_id from the request
+        $departmentId = $request->input('department_id');
+
+        // Fetch all departments for the dropdown
+        $departments = Department::all();
+
+        // Fetch reports based on department filter
+        if ($departmentId) {
+            $reports = Report::where('department_id', $departmentId)->get();
+        } else {
+            $reports = Report::all();
+        }
+        return view('dashboards.admin', compact('reports', 'departments')); // Points to the admin dashboard view
     }
 
     // Staff dashboard
