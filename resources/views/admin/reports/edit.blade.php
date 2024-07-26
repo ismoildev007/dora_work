@@ -29,11 +29,11 @@
         </div>
         <div class="mb-3">
             <label for="profit" class="form-label">Kirim</label>
-            <input type="text" class="form-control" id="profit" name="profit" value="{{ $report->profit }}" required>
+            <input type="text" class="form-control" id="profit" name="profit" value="{{ $report->profit }}" >
         </div>
         <div class="mb-3">
             <label for="outlay" class="form-label">Chiqim</label>
-            <input type="text" class="form-control" id="outlay" name="outlay" value="{{ $report->outlay }}" required>
+            <input type="text" class="form-control" id="outlay" name="outlay" value="{{ $report->outlay }}" >
         </div>
         <div class="row">
             <div class="col-md-3">

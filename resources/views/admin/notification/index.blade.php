@@ -9,7 +9,7 @@
             <a href="{{ route('notifications.read', $notification->id) }}" class="list-group-item list-group-item-action {{ $notification->read_at ? '' : 'active' }}">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">{!! $notification->data['title'] ?? 'Xabar' !!}</h5>
-                    <small>{{ $notification->created_at->diffForHumans() }}</small>
+                    <small>{{ $notification->created_at->diffForHumans() ?? ' ' }}</small>
                 </div>
                 <p class="mb-1">{!! $notification->data['message'] ?? '' !!}</p>
             </a>

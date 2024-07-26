@@ -1,5 +1,3 @@
-<!-- resources/views/activities/index.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -25,66 +23,82 @@
     td .action-buttons > * {
         margin-right: 5px; /* Space between buttons */
     }
+
+    /* Optional: Responsive table */
+    @media (max-width: 768px) {
+        .table-responsive {
+            overflow-x: auto;
+        }
+    }
 </style>
 
 <div class="container">
     <h1>Faoliyatlar</h1>
+    
     @can('create', App\Models\Activity::class)
-    <a href="{{ route('activities.create') }}" class="btn btn-primary">Vazifalar Yaratish</a>
+    <a href="{{ route('activities.create') }}" class="btn btn-primary mb-3">Vazifalar Yaratish</a>
     @endcan
+
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    <table class="table mt-4">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tavsif</th>
-                <th>Turi</th>
-                <th>Sana</th>
-                <th>Xodim</th>
-                {{-- <th>Mijoz</th>--}}
-                <th>Loyiha</th>
-                <th>Harakatlar</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($activities as $activity)
-            <tr>
-                <td>{{ $activity->id }}</td>
-                <td>{!! $activity->description !!}</td>
-                <td>{{ $activity->activity_type }}</td>
-                <td>{{ $activity->activity_date }}</td>
-                <td>{{ $activity->user->name ?? 'Mavjud Emas' }}</td>
-                {{-- <td>{{ $activity->client->name ?? 'Mavjud Emas' }}</td>--}}
-                <td>{{ $activity->project->name ?? 'Mavjud Emas' }}</td>
-                <td>
-                    <div class="action-buttons">
-                        @can('update', $activity)
-                        <a href="{{ route('activities.edit', $activity->id) }}" class="btn btn-warning btn-sm" title="Edit">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        @endcan
-                        <a href="{{ route('activities.show', $activity->id) }}" class="btn btn-info btn-sm" title="Show">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        @can('delete', $activity)
-                        <form action="{{ route('activities.destroy', $activity->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" title="Delete" onclick="return confirm('Ushbu faoliyatni o‘chirishni xohlaysizmi?')">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </form>
-                        @endcan
-                    </div>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+
+    <div class="table-responsive">
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tavsif</th>
+                    <th>Turi</th>
+                    <th>Sana</th>
+                    <th>Xodimlar</th>
+                    {{-- <th>Mijoz</th> --}}
+                    <th>Loyiha</th>
+                    <th>Harakatlar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($activities as $activity)
+                <tr>
+                    <td>{{ $activity->id }}</td>
+                    <td>{!! Str::limit($activity->description, 50) !!}</td> <!-- Shortened description for readability -->
+                    <td>{{ ucfirst($activity->activity_type) }}</td> <!-- Capitalize first letter of activity_type -->
+                    <td>{{ \Carbon\Carbon::parse($activity->activity_date)->format('d-m-Y') }}</td> <!-- Formatted date -->
+                    <td>
+                        @foreach($activity->staff as $staff)
+                            <span class="badge bg-primary">{{ $staff->name }}</span>
+                        @endforeach
+                    </td>
+                    {{-- <td>{{ $activity->client->name ?? 'Mavjud Emas' }}</td> --}}
+                    <td>{{ $activity->project->name ?? 'Mavjud Emas' }}</td>
+                    <td>
+                        <div class="action-buttons">
+                            @can('update', $activity)
+                            <a href="{{ route('activities.edit', $activity->id) }}" class="btn btn-warning btn-sm" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            @endcan
+                            <a href="{{ route('activities.show', $activity->id) }}" class="btn btn-info btn-sm" title="Show">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            @can('delete', $activity)
+                            <form action="{{ route('activities.destroy', $activity->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" title="Delete" onclick="return confirm('Ushbu faoliyatni o‘chirishni xohlaysizmi?')">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                            @endcan
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection

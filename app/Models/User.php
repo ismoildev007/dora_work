@@ -64,6 +64,17 @@ class User extends Authenticatable
         return $this->hasMany(Activity::class);
     }
 
+    // In User.php
+
+    // App\Models\User.php
+
+public function activities()
+{
+    return $this->belongsToMany(Activity::class, 'activity_user', 'user_id', 'activity_id');
+}
+
+
+
     // Relationship with Messages (one-to-many)
     public function messages()
     {

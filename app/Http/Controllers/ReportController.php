@@ -21,9 +21,17 @@ class ReportController extends Controller
 
         // Fetch distinct years for the dropdown
         $years = DB::table('reports')
-        ->selectRaw('YEAR(date) as year')
-        ->distinct()
-        ->pluck('year');        // Determine the date range based on the selected month and year
+            ->select(DB::raw('DISTINCT SUBSTR(date, 1, 4) as year')) // Extract year from YYYY-MM
+            ->pluck('year')
+            ->sortDesc(); // Optional: sort years in descending order
+
+        // Fetch distinct months for the dropdown
+        $months = DB::table('reports')
+            ->select(DB::raw('DISTINCT SUBSTR(date, 6, 2) as month')) // Extract month from YYYY-MM
+            ->pluck('month')
+            ->sortDesc(); // Optional: sort months in descending order
+
+        // Determine the date range based on the selected month and year
         $startDate = now()->startOfYear(); // Default to the start of the current year
         $endDate = now(); // Current date
 
@@ -36,24 +44,28 @@ class ReportController extends Controller
             $startDate = Carbon::create($year ?? now()->year, $month, 1);
             $endDate = $startDate->copy()->endOfMonth();
         }
+        
+        
 
         // Fetch reports based on department filter and date range
-        $query = Report::whereBetween('date', [$startDate->format('Y-m-d'), $endDate->format('Y-m-d')]);
+        $query = Report::whereBetween('date', [$startDate->format('Y-m'), $endDate->format('Y-m')]);
 
         if ($departmentId) {
             $query->where('department_id', $departmentId);
         }
 
-        $reports = $query->get();
-
+        // Apply sorting
+        $reports = $query->orderBy('date', 'desc')->get();
         // Format report dates for display
         $reports->transform(function ($report) {
-            $report->date = \Carbon\Carbon::parse($report->date)->format('F Y');
+            $report->date = Carbon::parse($report->date)->formatUzbekMonth();
             return $report;
         });
 
-        return view('admin.reports.index', compact('reports', 'departments', 'years'));
+
+        return view('admin.reports.index', compact('reports', 'departments', 'years', 'months'));
     }
+
 
     public function create()
     {
