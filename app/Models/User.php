@@ -72,4 +72,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Conversation::class, 'participants', 'user_id', 'conversation_id')
             ->withTimestamps();
     }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class, 'staff_id', 'id');
+    }
 }

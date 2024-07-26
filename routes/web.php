@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ManagerController;
@@ -42,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('project-images/{project}', [ProjectController::class, 'destroyImage'])->name('project-images.destroy');
     Route::resource('clients', ClientController::class);
     Route::resource('managers', ManagerController::class);
+    Route::resource('attendance', AttendanceController::class);
 
     Route::resource('messages', MessageController::class);
 
