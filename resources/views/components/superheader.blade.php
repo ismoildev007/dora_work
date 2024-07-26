@@ -1,34 +1,30 @@
 <?php
+// Foydalanuvchi ma'lumotlarini olish
 $notifications = auth()->user()->notifications()->limit(10)->get();
 
 ?>
 
-
-
 <div class="main-menu">
-
-
-
-    <!-- Brand Logo -->
+    <!-- Brend Logotipi -->
     <div class="logo-box">
-        <!-- Brand Logo Light -->
+        <!-- Yorug' Logotip -->
         <a href="index.html" class="logo-light">
             <img src="/admin-panel/assets/images/logo-light.png" alt="logo" class="logo-lg" height="28">
             <img src="/admin-panel/assets/images/logo-sm.png" alt="small logo" class="logo-sm" height="28">
         </a>
 
-        <!-- Brand Logo Dark -->
+        <!-- Qorong'i Logotip -->
         <a href="index.html" class="logo-dark">
             <img src="/admin-panel/assets/images/logo-dark.png" alt="dark logo" class="logo-lg" height="28">
             <img src="/admin-panel/assets/images/logo-sm.png" alt="small logo" class="logo-sm" height="28">
         </a>
     </div>
 
-    <!--- Menu -->
+    <!--- Menyu -->
     <div data-simplebar>
         <ul class="app-menu">
 
-            <li class="menu-title">Menu</li>
+            <li class="menu-title">Menyu</li>
             <li class="menu-item">
                 <a
                        @if( auth()->user()->role == 'admin')
@@ -41,7 +37,7 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                         class="menu-link waves-effect waves-light">
 
                     <span class="menu-icon"><i class="bx bx-home-smile"></i></span>
-                    <span class="menu-text"> Dashboards </span>
+                    <span class="menu-text"> Boshqaruv paneli </span>
                     <span class="badge bg-primary rounded ms-auto">01</span>
                 </a>
             </li>
@@ -49,7 +45,7 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                 <li class="menu-item">
                     <a href="{{ route('users.index') }}" class="menu-link waves-effect waves-light">
                         <span class="menu-icon"><i class="bx bx-user"></i></span>
-                        <span class="menu-text"> Users </span>
+                        <span class="menu-text"> Foydalanuvchilar </span>
                     </a>
                 </li>
             @endcan
@@ -57,7 +53,7 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                 <li class="menu-item">
                     <a href="{{ route('activities.index') }}" class="menu-link waves-effect waves-light">
                         <span class="menu-icon"><i class="bx bxl-wordpress"></i></span>
-                        <span class="menu-text"> Activity </span>
+                        <span class="menu-text"> Faoliyat </span>
                     </a>
                 </li>
             @endcan
@@ -65,24 +61,24 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                 <li class="menu-item">
                     <a href="{{ route('clients.index') }}" class="menu-link waves-effect waves-light">
                         <span class="menu-icon"><i class="bx bx-clipboard"></i></span>
-                        <span class="menu-text"> Client </span>
+                        <span class="menu-text"> Mijozlar </span>
                     </a>
                 </li>
             @endcan
 
-            <li class="menu-item">
+            <!-- <li class="menu-item">
                 <a href="{{ route('messages.index') }}" class="menu-link">
                     <span class="menu-icon"><i class="bx bx-message"></i></span>
 
-                    <span class="menu-text">Message</span>
+                    <span class="menu-text">Xabarlar</span>
                 </a>
-            </li>
+            </li> -->
             @can('view-project')
             <li class="menu-item">
                 <a href="{{ route('projects.index') }}" class="menu-link">
                     <span class="menu-icon"><i class="bx bxl-product-hunt"></i></span>
 
-                    <span class="menu-text">Projects</span>
+                    <span class="menu-text">Loyihalar</span>
                 </a>
             </li>
             @endcan
@@ -91,7 +87,7 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                     <a href="{{ route('departments.index') }}" class="menu-link">
                         <span class="menu-icon"><i class="bx bx-detail"></i></span>
 
-                        <span class="menu-text">Department</span>
+                        <span class="menu-text">Bo'limlar</span>
                     </a>
                 </li>
             @endcan
@@ -100,7 +96,7 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                     <a href="{{ route('reports.index') }}" class="menu-link">
                         <span class="menu-icon"><i class="bx bxs-report"></i></span>
 
-                        <span class="menu-text">Report</span>
+                        <span class="menu-text">Hisobotlar</span>
                     </a>
                 </li>
             @endcan
@@ -109,7 +105,7 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                     <a href="{{ route('staffs.index') }}" class="menu-link">
                         <span class="menu-icon"><i class="bx bx-star"></i></span>
 
-                        <span class="menu-text">Staff</span>
+                        <span class="menu-text">Xodimlar</span>
                     </a>
                 </li>
             @endcan
@@ -124,35 +120,33 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
     </div>
 </div>
 
-
-
 <!-- ============================================================== -->
-<!-- Start Page Content here -->
+<!-- Bu yerdan boshlab sahifa mazmuni -->
 <!-- ============================================================== -->
 
 <div class="page-content">
 
-    <!-- ========== Topbar Start ========== -->
+    <!-- ========== Top panel boshlanishi ========== -->
     <div class="navbar-custom">
         <div class="topbar">
             <div class="topbar-menu d-flex align-items-center gap-lg-2 gap-1">
 
-                <!-- Brand Logo -->
+                <!-- Brend Logotipi -->
                 <div class="logo-box">
-                    <!-- Brand Logo Light -->
+                    <!-- Yorug' Logotip -->
                     <a href="index.html" class="logo-light">
                         <img src="/admin-panel/assets/images/logo-light.png" alt="logo" class="logo-lg" height="22">
                         <img src="/admin-panel/assets/images/logo-sm.png" alt="small logo" class="logo-sm" height="22">
                     </a>
 
-                    <!-- Brand Logo Dark -->
+                    <!-- Qorong'i Logotip -->
                     <a href="index.html" class="logo-dark">
                         <img src="/admin-panel/assets/images/logo-dark.png" alt="dark logo" class="logo-lg" height="22">
                         <img src="/admin-panel/assets/images/logo-sm.png" alt="small logo" class="logo-sm" height="22">
                     </a>
                 </div>
 
-                <!-- Sidebar Menu Toggle Button -->
+                <!-- Yon panel Menyu Tugmasi -->
                 <button class="button-toggle-menu">
                     <i class="mdi mdi-menu"></i>
                 </button>
@@ -172,11 +166,10 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                     </a>
                     <div class="dropdown-menu dropdown-menu-animated dropdown-menu-end dropdown-lg p-0">
                         <form class="p-3">
-                            <input type="search" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+                            <input type="search" class="form-control" placeholder="Qidirish..." aria-label="Qidirish">
                         </form>
                     </div>
                 </li>
-
 
                 <li class="dropdown d-none d-md-inline-block">
                     <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
@@ -184,24 +177,24 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
 
-                        <!-- item-->
+                        <!-- element -->
                         <a href="javascript:void(0);" class="dropdown-item">
-                            <img src="/admin-panel/assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
+                            <img src="/admin-panel/assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Nemischa</span>
                         </a>
 
-                        <!-- item-->
+                        <!-- element -->
                         <a href="javascript:void(0);" class="dropdown-item">
-                            <img src="/admin-panel/assets/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
+                            <img src="/admin-panel/assets/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italyancha</span>
                         </a>
 
-                        <!-- item-->
+                        <!-- element -->
                         <a href="javascript:void(0);" class="dropdown-item">
-                            <img src="/admin-panel/assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
+                            <img src="/admin-panel/assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Ispancha</span>
                         </a>
 
-                        <!-- item-->
+                        <!-- element -->
                         <a href="javascript:void(0);" class="dropdown-item">
-                            <img src="/admin-panel/assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
+                            <img src="/admin-panel/assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Ruscha</span>
                         </a>
 
                     </div>
@@ -216,11 +209,11 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                         <div class="p-2 border-top-0 border-start-0 border-end-0 border-dashed border">
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <h6 class="m-0 font-size-16 fw-semibold"> Notification</h6>
+                                    <h6 class="m-0 font-size-16 fw-semibold"> Xabarnoma</h6>
                                 </div>
                                 <div class="col-auto">
                                     <a href="{{ route('notifications.clear') }}" class="text-dark text-decoration-underline">
-                                        <small>Clear All</small>
+                                        <small>Barchasini tozalash</small>
                                     </a>
                                 </div>
                             </div>
@@ -238,7 +231,7 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                                                 </div>
                                             </div>
                                             <div class="flex-grow-1 text-truncate ms-2">
-                                                <h5 class="noti-item-title fw-semibold font-size-14">{{ $notification->data['title'] ?? 'Notification' }}
+                                                <h5 class="noti-item-title fw-semibold font-size-14">{{ $notification->data['title'] ?? 'Xabarnoma' }}
                                                     <small class="fw-normal text-muted ms-1">{{ $notification->created_at->diffForHumans() }}</small>
                                                 </h5>
                                                 <small class="noti-item-subtitle text-muted">{{ $notification->data['message'] ?? '' }}</small>
@@ -247,7 +240,7 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                                     </div>
                                 </a>
                             @empty
-                                <div class="text-center text-muted mt-3">No notifications</div>
+                                <div class="text-center text-muted mt-3">Yangi xabar yo'q</div>
                             @endforelse
 
                             <div class="text-center">
@@ -255,14 +248,12 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                             </div>
                         </div>
 
-                        <!-- All-->
+                        <!-- Barchasi -->
                         <a href="{{ route('notifications.all') }}" class="dropdown-item text-center text-primary notify-item border-top border-light py-2">
-                            View All
+                            Barchasini ko'rish
                         </a>
                     </div>
                 </li>
-
-
 
                 <li class="nav-link" id="theme-mode">
                     <i class="bx bx-moon font-size-24"></i>
@@ -276,4 +267,4 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
             </ul>
         </div>
     </div>
-    <!-- ========== Topbar End ========== -->
+    <!-- ========== Top panel tugashi ========== -->

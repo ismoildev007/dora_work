@@ -2,17 +2,17 @@
 
 @section('content')
     <div class="container">
-        <h1>Amounts</h1>
-        <a href="{{ route('amounts.create') }}" class="btn btn-primary">Create Amount</a>
+        <h1>Miqdorlar</h1>
+        <a href="{{ route('amounts.create') }}" class="btn btn-primary">Miqdor Yaratish</a>
         <table class="table mt-4">
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Project</th>
-                <th>Status</th>
-                <th>Profit</th>
-                <th>Outlay</th>
-                <th>Actions</th>
+                <th>Loyiha</th>
+                <th>Holat</th>
+                <th>Foyda</th>
+                <th>Xarajat</th>
+                <th>Harakatlar</th>
             </tr>
             </thead>
             <tbody>
@@ -24,11 +24,11 @@
                     <td>{{ $amount->profit }}</td>
                     <td>{{ $amount->outlay }}</td>
                     <td>
-                        <a href="{{ route('amounts.edit', $amount->id) }}" class="btn btn-warning">Edit</a>
+                        <a href="{{ route('amounts.edit', $amount->id) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                         <form action="{{ route('amounts.destroy', $amount->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
                 </tr>
