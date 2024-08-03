@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('conversations', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable(); // Guruh suhbatlari uchun nom
-            $table->boolean('is_group')->default(false);
-            $table->timestamps(); // created_at va updated_at
+            $table->unsignedBigInteger('agreement_id');
+            $table->decimal('residual', 10, 2);
+            $table->decimal('profit', 10, 2);
+            $table->timestamps();
         });
     }
 
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('conversations');
+        Schema::dropIfExists('transactions');
     }
 };

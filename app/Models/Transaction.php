@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ActivityImage extends Model
+class Transaction extends Model
 {
     use HasFactory;
 
-    protected $table = 'activity_images';
 
     protected $fillable = [
-        'activity_id',
-        'image',
+        'agreement_id',
+        'residual',
+        'profit'
     ];
 
-    public function activity()
+    public function agreement()
     {
-        return $this->belongsTo(Activity::class);
+        return $this->belongsTo(Agreement::class);
     }
 }

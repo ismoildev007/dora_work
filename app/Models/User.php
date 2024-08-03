@@ -81,7 +81,6 @@ public function activities()
         return $this->hasMany(Message::class, 'sender_id', 'id');
     }
 
-    // Relationship with Participants (many-to-many)
     public function conversations()
     {
         return $this->belongsToMany(Conversation::class, 'participants', 'user_id', 'conversation_id')

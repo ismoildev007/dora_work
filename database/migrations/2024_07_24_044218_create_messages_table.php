@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('sender_id');
             $table->text('content');
             $table->timestamp('sent_at')->useCurrent();
-            $table->timestamps(); // created_at and updated_at
+            $table->timestamps();
 
             $table->foreign('conversation_id')->references('id')->on('conversations')->onDelete('cascade');
             $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');

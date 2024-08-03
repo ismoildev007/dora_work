@@ -31,24 +31,20 @@ class ReportController extends Controller
             ->pluck('month')
             ->sortDesc(); // Optional: sort months in descending order
 
-        // Determine the date range based on the selected month and year
-        $startDate = now()->startOfYear(); // Default to the start of the current year
-        $endDate = now(); // Current date
+        // Fetch reports based on department filter and date range
+        $query = Report::query();
 
         if ($year) {
             $startDate = Carbon::create($year, 1, 1);
             $endDate = Carbon::create($year, 12, 31);
+            $query->whereBetween('date', [$startDate->format('Y-m'), $endDate->format('Y-m')]);
         }
 
         if ($month) {
             $startDate = Carbon::create($year ?? now()->year, $month, 1);
             $endDate = $startDate->copy()->endOfMonth();
+            $query->whereBetween('date', [$startDate->format('Y-m'), $endDate->format('Y-m')]);
         }
-        
-        
-
-        // Fetch reports based on department filter and date range
-        $query = Report::whereBetween('date', [$startDate->format('Y-m'), $endDate->format('Y-m')]);
 
         if ($departmentId) {
             $query->where('department_id', $departmentId);
@@ -56,12 +52,12 @@ class ReportController extends Controller
 
         // Apply sorting
         $reports = $query->orderBy('date', 'desc')->get();
+
         // Format report dates for display
         $reports->transform(function ($report) {
             $report->date = Carbon::parse($report->date)->formatUzbekMonth();
             return $report;
         });
-
 
         return view('admin.reports.index', compact('reports', 'departments', 'years', 'months'));
     }

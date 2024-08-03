@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('conversation_id');
             $table->unsignedBigInteger('user_id');
-            $table->timestamps(); // created_at and updated_at
+            $table->timestamps();
 
             $table->foreign('conversation_id')->references('id')->on('conversations')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unique(['conversation_id', 'user_id']); // Ensure a user can only join a conversation once
+            $table->unique(['conversation_id', 'user_id']); // Foydalanuvchilar faqat bir marta guruhga qo'shilishi mumkin
         });
     }
 

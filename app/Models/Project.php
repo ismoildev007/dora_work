@@ -10,14 +10,22 @@ class Project extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'description',
+        'company_inn',
+        'company_name',
+        'company_person',
         'start_date',
         'end_date',
+        'project_status',
+        'payment_status',
+        'agreement_id',
         'client_id',
         'manager_id',
-        'status',
     ];
+
+    public function agreement()
+    {
+        return $this->belongsTo(Agreement::class);
+    }
 
     // Relationship with Client (inverse one-to-many)
     public function client()
