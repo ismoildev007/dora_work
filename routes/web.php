@@ -13,7 +13,9 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\DepartmentController;
-
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\AgreementController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,18 +46,28 @@ Route::middleware('auth')->group(function () {
     Route::resource('clients', ClientController::class);
     Route::resource('managers', ManagerController::class);
     Route::resource('attendance', AttendanceController::class);
-
     Route::resource('messages', MessageController::class);
-
     Route::resource('reports', ReportController::class);
-
     Route::resource('departments', DepartmentController::class);
-
-
-
+    Route::resource('projects', ProjectController::class);
     Route::resource('staffs', StaffController::class);
 
-    Route::resource('projects', ProjectController::class);
+    // Yangi routlar
+
+    Route::resource('agreements', AgreementController::class);
+    Route::get('transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    Route::post('transactions', [TransactionController::class, 'store'])->name('transactions.store');
+    Route::get('transactions/{transaction}/edit', [TransactionController::class, 'edit'])->name('transactions.edit');
+    Route::put('transactions/{transaction}', [TransactionController::class, 'update'])->name('transactions.update');
+    Route::delete('transactions/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
+
+    //---------------------------------------
+
+    //Chat
+    Route::get('/conversations', [ChatController::class, 'index']);
+    Route::get('/broadcast', [ChatController::class, 'broadcast'])->name('broadcast');
+    Route::post('/receive', [ChatController::class, 'receive'])->name('receive');
+
     Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::get('notifications/read/{id}', [NotificationController::class, 'show'])->name('notifications.read');
     Route::get('notifications/clear', [NotificationController::class, 'clear'])->name('notifications.clear');

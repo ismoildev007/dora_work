@@ -14,13 +14,11 @@ class Participant extends Model
         'user_id',
     ];
 
-    // Relationship with Conversation (inverse one-to-many)
     public function conversation()
     {
         return $this->belongsTo(Conversation::class, 'conversation_id', 'id');
     }
 
-    // Relationship with User (inverse one-to-many)
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');

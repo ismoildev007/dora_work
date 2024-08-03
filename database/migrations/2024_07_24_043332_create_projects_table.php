@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
-            $table->unsignedBigInteger('client_id')->nullable();
-            $table->unsignedBigInteger('manager_id')->nullable();
-            $table->enum('status', ['planned', 'active', 'completed', 'on_hold']);
+            $table->string('company_inn');
+            $table->string('company_name');
+            $table->string('company_person');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->enum('project_status', ['completed', 'in_progress', 'on_hold', 'cancelled']);
+            $table->enum('payment_status', ['paid', 'partially_paid', 'unpaid']);
+            $table->foreignId('client_id')->nullable()->constrained('clients');
+            $table->foreignId('manager_id')->nullable()->constrained('users');
+            $table->foreignId('agreement_id')->nullable()->constrained('agreements');
             $table->timestamps(); // created_at and updated_at
-
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('set null');
-            $table->foreign('manager_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 

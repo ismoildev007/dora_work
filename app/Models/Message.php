@@ -15,15 +15,13 @@ class Message extends Model
         'content',
     ];
 
-    // Relationship with Conversation (inverse one-to-many)
     public function conversation()
     {
         return $this->belongsTo(Conversation::class, 'conversation_id', 'id');
     }
 
-    // Relationship with User (inverse one-to-many)
     public function sender()
     {
-        return $this->belongsTo(User::class, 'sender_id', 'id');
+        return $this->belongsTo(User::class, 'sender_id');
     }
 }

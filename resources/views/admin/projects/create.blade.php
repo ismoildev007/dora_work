@@ -3,34 +3,27 @@
 @section('content')
     <div class="container">
         <h1>Loyiha Yaratish</h1>
-        <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data" onsubmit="updateEditorContent()">
+        <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label for="name">Nomi</label>
-                <input type="text" name="name" class="form-control" id="name" required>
-            </div>
-            <div class="mt-3">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="header-title">Tavsif</h4>
-                                <div id="editor_uz" style="height: 300px;">
-                                    <!-- Quill editor content -->
-                                </div>
-                                <input type="hidden" name="description" id="description_uz">
-                            </div> <!-- end card-body-->
-                        </div> <!-- end card-->
-                    </div><!-- end col -->
-                </div>
+                <label for="company_inn">Company INN</label>
+                <input type="text" class="form-control" id="company_inn" name="company_inn" required>
             </div>
             <div class="form-group">
-                <label for="start_date">Boshlanish Sanasi</label>
-                <input type="date" name="start_date" class="form-control" id="start_date">
+                <label for="company_name">Company Name</label>
+                <input type="text" class="form-control" id="company_name" name="company_name" required>
             </div>
             <div class="form-group">
-                <label for="end_date">Tugash Sanasi</label>
-                <input type="date" name="end_date" class="form-control" id="end_date">
+                <label for="company_person">Company Person</label>
+                <input type="text" class="form-control" id="company_person" name="company_person" required>
+            </div>
+            <div class="form-group">
+                <label for="start_date">Start Date</label>
+                <input type="date" class="form-control" id="start_date" name="start_date" required>
+            </div>
+            <div class="form-group">
+                <label for="end_date">End Date</label>
+                <input type="date" class="form-control" id="end_date" name="end_date" required>
             </div>
             <div class="form-group">
                 <label for="client_id">Mijoz</label>
@@ -49,32 +42,32 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="status">Holat</label>
-                <select name="status" class="form-control" id="status" required>
-                    <option value="planned">Rejalashtirilgan</option>
-                    <option value="active">Faol</option>
-                    <option value="completed">Tamamlangan</option>
-                    <option value="on_hold">To'xtatilgan</option>
+                <label for="agreement_id">Agreement</label>
+                <select class="form-control" id="agreement_id" name="agreement_id">
+                    <option value="">None</option>
+                    @foreach ($agreements as $agreement)
+                        <option value="{{ $agreement->id }}">{{ $agreement->contract }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="form-group">
-                <label for="images">Rasmlar</label>
-                <input type="file" name="images[]" class="form-control" id="images" multiple>
+                <label for="project_status">Project Status</label>
+                <select class="form-control" id="project_status" name="project_status" required>
+                    <option value="completed">Completed</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="on_hold">On Hold</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="payment_status">Payment Status</label>
+                <select class="form-control" id="payment_status" name="payment_status" required>
+                    <option value="paid">Paid</option>
+                    <option value="partially_paid">Partially Paid</option>
+                    <option value="unpaid">Unpaid</option>
+                </select>
             </div>
             <button type="submit" class="btn btn-primary">Yaratish</button>
         </form>
     </div>
-
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-
-    <script>
-        var editorUz = new Quill('#editor_uz', {
-            theme: 'snow'
-        });
-
-        function updateEditorContent() {
-            document.getElementById('description_uz').value = editorUz.root.innerHTML;
-        }
-    </script>
 @endsection

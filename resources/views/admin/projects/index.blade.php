@@ -14,28 +14,35 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Nomi</th>
-                <th>Mijoz</th>
-                <th>Boshqaruvchi</th>
-                <th>Holat</th>
-                <th>Harakatlar</th>
+                <th>Company INN</th>
+                <th>Company Name</th>
+                <th>Company Person</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Project Status</th>
+                <th>Payment Status</th>
+                <th>Agreement ID</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             @foreach($projects as $project)
                 <tr>
                     <td>{{ $project->id }}</td>
-                    <td>{{ $project->name }}</td>
-                    <td>{{ $project->client->name ?? 'N/A' }}</td>
-                    <td>{{ $project->manager->name ?? 'N/A' }}</td>
-                    <td>{{ $project->status }}</td>
+                    <td>{{ $project->company_inn }}</td>
+                    <td>{{ $project->company_name }}</td>
+                    <td>{{ $project->company_person }}</td>
+                    <td>{{ $project->start_date }}</td>
+                    <td>{{ $project->end_date }}</td>
+                    <td>{{ $project->project_status }}</td>
+                    <td>{{ $project->payment_status }}</td>
+                    <td>{{ $project->agreement->service_name }}</td>
                     <td>
-                        <a href="{{ route('projects.show', $project->id) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                        <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                        <form action="{{ route('projects.destroy', $project->id) }}" method="POST" style="display:inline-block;">
+                        <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-warning">Edit</a>
+                        <form action="{{ route('projects.destroy', $project->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                            <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
                     </td>
                 </tr>

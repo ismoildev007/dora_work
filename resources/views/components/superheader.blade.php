@@ -74,6 +74,22 @@ $notifications = auth()->user()->notifications()->limit(10)->get();
                     </a>
                 </li>
             @endcan
+            @can('view-agreements')
+                <li class="menu-item">
+                    <a href="{{ route('agreements.index') }}" class="menu-link waves-effect waves-light">
+                        <span class="menu-icon"><i class="bx bx-agreements"></i></span>
+                        <span class="menu-text"> Agreement </span>
+                    </a>
+                </li>
+            @endcan
+            @can('view-transactions')
+                <li class="menu-item">
+                    <a href="{{ route('transactions.index') }}" class="menu-link waves-effect waves-light">
+                        <span class="menu-icon"><i class="bx bx-transaction"></i></span>
+                        <span class="menu-text"> Transactions </span>
+                    </a>
+                </li>
+            @endcan
             @can('view-project')
                 <li class="menu-item">
                     <a href="{{ route('projects.index') }}" class="menu-link">
