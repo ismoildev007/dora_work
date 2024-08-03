@@ -9,11 +9,11 @@ class Transaction extends Model
 {
     use HasFactory;
 
-
     protected $fillable = [
         'agreement_id',
         'residual',
-        'profit'
+        'profit',  // amount paid
+        'payment_date' // date of payment
     ];
 
     public function agreement()

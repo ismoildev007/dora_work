@@ -38,6 +38,7 @@
                     <td>{{ $project->payment_status }}</td>
                     <td>{{ $project->agreement->service_name }}</td>
                     <td>
+                        <a href="{{ route('agreements.index')}}" class="btn btn-info">+</a>
                         <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-warning">Edit</a>
                         <form action="{{ route('projects.destroy', $project->id) }}" method="POST" class="d-inline">
                             @csrf
