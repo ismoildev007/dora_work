@@ -47,37 +47,39 @@ class TransactionController extends Controller
 
 
 
-    public function edit(Transaction $transaction)
+    public function edit($id)
     {
-        // Edit modal uchun ma'lumotlarni ko'rsatadi
+        $transaction = Transaction::with('agreement')->findOrFail($id);
+        return response()->json([
+            'id' => $transaction->id,
+            'agreement_id' => $transaction->agreement_id,
+            'service_name' => $transaction->agreement->service_name,
+            'profit' => $transaction->profit
+        ]);
     }
 
-    public function update(Request $request, Transaction $transaction)
+
+
+    public function update(Request $request, $id)
     {
+        dd($request->all());
+        $transaction = Transaction::find($id);
+        if (!$transaction) {
+            return response()->json(['error' => 'Transaction not found'], 404);
+        }
+
+        // Validate the incoming data
         $request->validate([
-            'agreement_id' => 'required|exists:agreements,id',
-            'profit' => 'required|numeric'
+            'profit' => 'required|numeric|min:0',
+            // Add other validation rules if necessary
         ]);
 
-        // Avvalgi barcha to'lovlarni olish (yangi to'lovdan tashqari)
-        $totalProfit = Transaction::where('agreement_id', $request->agreement_id)
-            ->where('id', '!=', $transaction->id)
-            ->sum('profit');
+        // Update the transaction
+        $transaction->profit = $request->input('profit');
+        $transaction->agreement_id = $request->input('agreement_id');
+        $transaction->save();
 
-        // Yangi to'lovni qo'shish
-        $newProfit = $totalProfit + $request->profit;
-
-        // Residualni hisoblash
-        $agreement = Agreement::find($request->agreement_id);
-        $residual = $agreement->price - $newProfit;
-
-        $transaction->update([
-            'agreement_id' => $request->agreement_id,
-            'residual' => $residual,
-            'profit' => $request->profit
-        ]);
-
-        return redirect()->route('transactions.index')->with('success', 'Transaction updated successfully.');
+        return response()->json(['success' => true]);
     }
 
     public function destroy(Transaction $transaction)

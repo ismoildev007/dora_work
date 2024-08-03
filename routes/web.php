@@ -55,11 +55,8 @@ Route::middleware('auth')->group(function () {
     // Yangi routlar
 
     Route::resource('agreements', AgreementController::class);
-    Route::get('transactions', [TransactionController::class, 'index'])->name('transactions.index');
-    Route::post('transactions', [TransactionController::class, 'store'])->name('transactions.store');
-    Route::get('transactions/{transaction}/edit', [TransactionController::class, 'edit'])->name('transactions.edit');
-    Route::put('transactions/{transaction}', [TransactionController::class, 'update'])->name('transactions.update');
-    Route::delete('transactions/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
+    Route::resource('transactions', TransactionController::class);
+    Route::post('/transactions/{id}', [TransactionController::class, 'update'])->name('transactions.update');
 
     //---------------------------------------
 

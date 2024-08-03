@@ -15,7 +15,12 @@
             </div>
             <div class="form-group">
                 <label for="service_name">Service Name</label>
-                <input type="text" class="form-control" id="service_name" name="service_name" required>
+                <select class="form-control" id="service_type" name="service_name" required>
+                    <option value="smm">SMM</option>
+                    <option value="branding">Branding</option>
+                    <option value="development">Development</option>
+                    <option value="print">Print</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="service_type">Service Type</label>
