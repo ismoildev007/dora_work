@@ -20,11 +20,11 @@
             @foreach ($transactions as $transaction)
                 <tr>
                     <td>{{ $transaction->id }}</td>
-                    <td>{{ $transaction->agreement->contract }}</td>
+                    <td>{{ $transaction->agreement->service_name }}</td>
                     <td>{{ $transaction->residual }}</td>
                     <td>{{ $transaction->profit }}</td>
                     <td>
-{{--                        <button class="btn btn-warning btn-edit" data-transaction-id="{{ $transaction->id }}" data-bs-toggle="modal" data-bs-target="#editTransactionModal">Edit</button>--}}
+                        <button class="btn btn-warning btn-edit" data-transaction-id="{{ $transaction->id }}" data-bs-toggle="modal" data-bs-target="#editTransactionModal">Edit</button>
                         <form action="{{ route('transactions.destroy', $transaction->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
@@ -78,27 +78,23 @@
                 <div class="modal-body">
                     <form id="editTransactionForm" method="POST">
                         @csrf
-                        @method('PUT')
+                        @method('PUT') <!-- Corrected to PUT method for updating -->
                         <div class="form-group">
-                            <label for="edit_agreement_id">Agreement</label>
-                            <select name="agreement_id" id="edit_agreement_id" class="form-control" required>
-                                @foreach($agreements as $agreement)
-                                    <option value="{{ $agreement->id }}">{{ $agreement->service_name }}</option>
-                                @endforeach
-                            </select>
+                            <label for="edit_agreement_name">Agreement</label>
+                            <input type="text" id="edit_agreement_name" class="form-control" readonly>
                         </div>
                         <div class="form-group">
                             <label for="edit_profit">Profit</label>
                             <input type="number" name="profit" id="edit_profit" class="form-control" step="0.01" required>
                         </div>
                         <input type="hidden" id="edit_transaction_id" name="transaction_id">
+                        <input type="hidden" id="edit_agreement_id" name="agreement_id">
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('scripts')
@@ -134,7 +130,7 @@
                 const formData = new FormData(this);
                 const transactionId = document.getElementById('edit_transaction_id').value;
                 fetch(`/transactions/${transactionId}`, {
-                    method: 'PUT',
+                    method: 'PUT', // Use PUT method for updating
                     body: formData,
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -159,9 +155,10 @@
                     fetch(`/transactions/${transactionId}/edit`)
                         .then(response => response.json())
                         .then(data => {
-                            document.getElementById('edit_agreement_id').value = data.agreement_id;
+                            document.getElementById('edit_agreement_name').value = data.service_name;
                             document.getElementById('edit_profit').value = data.profit;
                             document.getElementById('edit_transaction_id').value = data.id;
+                            document.getElementById('edit_agreement_id').value = data.agreement_id;
                             new bootstrap.Modal(document.getElementById('editTransactionModal')).show();
                         })
                         .catch(error => console.error('Fetch error:', error));
