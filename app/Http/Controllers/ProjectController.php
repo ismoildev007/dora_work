@@ -42,7 +42,6 @@ class ProjectController extends Controller
             'manager_id' => 'nullable|exists:users,id',
         ]);
 
-
         $project = Project::create($request->all());
 
         return redirect()->route('projects.index')->with('success', 'Project created successfully.');

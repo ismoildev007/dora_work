@@ -53,10 +53,10 @@
             <div class="form-group">
                 <label for="project_status">Project Status</label>
                 <select class="form-control" id="project_status" name="project_status" required>
-                    <option value="completed">Completed</option>
-                    <option value="in_progress">In Progress</option>
-                    <option value="on_hold">On Hold</option>
-                    <option value="cancelled">Cancelled</option>
+                    <option value="completed">Yakunlangan</option>
+                    <option value="in_progress">Jarayonda</option>
+                    <option value="on_hold">Kutishda</option>
+                    <option value="cancelled">Bekor qilingan</option>
                 </select>
             </div>
             <div class="form-group">
