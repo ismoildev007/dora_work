@@ -3,6 +3,16 @@
 @section('content')
     <div class="container">
         <h1>Transactions</h1>
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <table class="table table-striped mt-3">
             <thead>
             <tr>
@@ -21,10 +31,16 @@
                     <td>{{ $transaction->residual }}</td>
                     <td>{{ $transaction->profit }}</td>
                     <td>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editTransactionModal"
-                                data-id="{{ $transaction->id }}">
-                            Edit
-                        </button>
+                        @if ($transaction->residual > 0 || $transaction->profit == 0)
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editTransactionModal"
+                                    data-id="{{ $transaction->id }}"
+                                    data-agreement-id="{{ $transaction->agreement_id }}"
+                                    data-profit="{{ $transaction->profit }}">
+                                Edit
+                            </button>
+                        @else
+                            <button type="button" class="btn btn-secondary" disabled>Edit</button>
+                        @endif
                         <form action="{{ route('transactions.destroy', $transaction->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
@@ -46,18 +62,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editTransactionForm" action="{{ route('transactions.update', 'transaction_id_placeholder') }}" method="POST">
+                    <form id="editTransactionForm" action="{{ route('transactions.store') }}" method="POST">
                         @csrf
-                        @method('PUT')
                         <input type="hidden" name="id" id="edit_id">
-                        <div class="form-group">
-                            <label for="edit_agreement_name">Agreement</label>
-                            <input type="text" name="agreement_name" id="edit_agreement_name" class="form-control" readonly>
-                            <input type="hidden" name="agreement_id" id="edit_agreement_id">
-                        </div>
+                        <input type="hidden" name="agreement_id" id="edit_agreement_id">
                         <div class="form-group">
                             <label for="edit_profit">Profit</label>
-                            <input type="number" name="profit"  class="form-control" step="0.01" required>
+                            <input type="number" name="profit" id="edit_profit" class="form-control" step="0.01" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
@@ -67,25 +78,36 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const editTransactionModal = document.getElementById('editTransactionModal');
-            editTransactionModal.addEventListener('show.bs.modal', function (event) {
-                const button = event.relatedTarget;
-                const transactionId = button.getAttribute('data-id');
+        const editTransactionModal = document.getElementById('editTransactionModal');
+        editTransactionModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-id');
+            const agreementId = button.getAttribute('data-agreement-id');
+            const profit = parseFloat(button.getAttribute('data-profit'));
 
-                fetch(`/transactions/${transactionId}/edit`)
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('edit_id').value = data.id;
-                        document.getElementById('edit_agreement_name').value = data.agreement.service_name;
-                        document.getElementById('edit_agreement_id').value = data.agreement.id;
-                        document.getElementById('edit_profit').value = data.profit;
+            const idInput = editTransactionModal.querySelector('#edit_id');
+            const agreementInput = editTransactionModal.querySelector('#edit_agreement_id');
+            const profitInput = editTransactionModal.querySelector('#edit_profit');
 
-                        const form = document.getElementById('editTransactionForm');
-                        form.action = form.action.replace('transaction_id_placeholder', data.id);
-                    })
-                    .catch(error => console.error('Error fetching transaction data:', error));
-            });
+            idInput.value = id;
+            agreementInput.value = agreementId;
+            profitInput.value = ''; // Clear the input field
+        });
+
+        document.getElementById('editTransactionForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent form from submitting normally
+
+            const id = document.querySelector('#edit_id').value;
+            const agreementId = document.querySelector('#edit_agreement_id').value;
+            const newProfit = parseFloat(document.querySelector('#edit_profit').value);
+
+            // Fetch the existing profit from the data attribute of the button
+            // The existing profit is already handled by server-side logic
+
+            // Assuming you have a way to get the old profit value server-side and update it
+
+            // Example of sending updated profit to server (use AJAX or include it in the form)
+            document.querySelector('#editTransactionForm').submit();
         });
     </script>
 @endsection
