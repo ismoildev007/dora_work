@@ -56,7 +56,6 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('agreements', AgreementController::class);
     Route::resource('transactions', TransactionController::class);
-    Route::post('/transactions/{id}', [TransactionController::class, 'update'])->name('transactions.update');
 
     //---------------------------------------
 
