@@ -23,6 +23,7 @@ class Project extends Model
         return $this->hasMany(Agreement::class);
     }
 
+
     // Relationship with Client (inverse one-to-many)
     public function client()
     {

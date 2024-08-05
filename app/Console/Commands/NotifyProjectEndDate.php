@@ -52,7 +52,7 @@ class NotifyProjectEndDate extends Command
 
         foreach ($projects as $project) {
             // Construct the message
-            $message = "{$project->company_name} loyihasining statusini o'zgartiring";
+            $message = "{$project->client->company_name} {$project->end_date} da loyihani yakunlashingiz kerak, admin panel orqali loyiha holatini o'zgartiring";
 
             // Send the message via Telegram Bot
             $this->sendTelegramMessage($message);

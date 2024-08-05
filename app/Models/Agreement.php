@@ -21,6 +21,7 @@ class Agreement extends Model
     {
         return $this->belongsTo(Project::class);
     }
+
     public function transactions()
     {
         return $this->hasMany(Transaction::class);

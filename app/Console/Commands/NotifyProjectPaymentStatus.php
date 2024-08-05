@@ -40,19 +40,20 @@ class NotifyProjectPaymentStatus extends Command
      */
     public function handle()
     {
-        // Check if today is the 25th
-        if (Carbon::today()->day !== 25) {
+//        // Check if today is the 25th
+        if (Carbon::today()->day !== 05) {
             $this->info('Today is not the 25th. Skipping notifications.');
             return 0;
         }
 
         // Fetch all projects with their agreements and transactions
-        $projects = Project::with(['agreement.transactions'])->get();
+        // Fetch all projects with their agreements and transactions
+        $projects = Project::with(['agreements.transactions'])->get();
 
         foreach ($projects as $project) {
-            $agreement = $project->agreement;
+            $agreements = $project->agreements;
 
-            if ($agreement) {
+            foreach ($agreements as $agreement) {
                 // Calculate total amount paid
                 $totalPaid = $agreement->transactions->sum('profit');
                 $latestTransactionDate = $agreement->transactions->max('payment_date');
@@ -75,22 +76,14 @@ class NotifyProjectPaymentStatus extends Command
             }
         }
 
+
         $this->info('Payment status notifications sent successfully.');
         return 0;
     }
 
-    /**
-     * Send a partial payment notification via Telegram.
-     *
-     * @param \App\Models\Project $project
-     * @param float $totalPaid
-     * @param float $remainingAmount
-     * @param string $latestTransactionDate
-     * @return void
-     */
     private function sendPartialPaymentNotification(Project $project, float $totalPaid, float $remainingAmount, $latestTransactionDate)
     {
-        $message = "{$project->company_name} {$totalPaid} to'lovini {$latestTransactionDate} da amalga oshirgan! Qoldiq: {$remainingAmount} to’lovni amalga oshirishingiz kerak";
+        $message = "{$project->client->company_name} {$totalPaid} to'lovini {$latestTransactionDate} da amalga oshirgan! Qoldiq: {$remainingAmount} to’lovni amalga oshirishingiz kerak";
 
         $this->sendTelegramMessage($message);
     }
