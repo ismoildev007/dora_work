@@ -73,7 +73,7 @@
                         @endforeach
                     </td>
                     {{-- <td>{{ $activity->client->name ?? 'Mavjud Emas' }}</td> --}}
-                    <td>{{ $activity->project->name ?? 'Mavjud Emas' }}</td>
+                    <td>{{ $activity->project->client->company_name ?? 'Mavjud Emas' }}</td>
                     <td>
                         <div class="action-buttons">
                             @can('update', $activity)

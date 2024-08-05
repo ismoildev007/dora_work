@@ -3,7 +3,6 @@
 @section('content')
     <div class="container">
         <h1>Agreements</h1>
-        <a href="{{ route('agreements.create') }}" class="btn btn-primary">Create Agreement</a>
         <table class="table table-striped mt-3">
             <thead>
             <tr>
@@ -24,7 +23,6 @@
                     <td>{{ $agreement->service_name }}</td>
                     <td>{{ $agreement->service_type }}</td>
                     <td>
-                        <a href="{{ route('agreements.edit', $agreement->id) }}" class="btn btn-warning">Edit</a>
                         <form action="{{ route('agreements.destroy', $agreement->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
