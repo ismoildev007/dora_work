@@ -12,8 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('notify:project-end')->dailyAt('00:00');
-        $schedule->command('notify:project-payment-status')->monthlyOn(25, '00:00');
+        $schedule->command('notify:project-end')->dailyAt('14:05');
+        $schedule->command('notify:project-payment-status')->monthlyOn(05, '14:05');
     }
 
     /**

@@ -39,7 +39,7 @@
                                 To'lov qilish
                             </button>
                         @else
-                            <button type="button" class="btn btn-secondary" disabled>Tahrirlash</button>
+                            <button type="button" class="btn btn-secondary" disabled>To'lov qilish</button>
                         @endif
                         <form action="{{ route('transactions.destroy', $transaction->id) }}" method="POST" class="d-inline">
                             @csrf
