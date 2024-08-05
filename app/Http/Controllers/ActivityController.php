@@ -15,15 +15,12 @@ use Illuminate\Support\Facades\Storage;
 class ActivityController extends Controller
 {
     // Display a listing of activities
-    // App\Http\Controllers\ActivityController.php
-
     public function index()
     {
         $this->authorize('viewAny', Activity::class);
-        $activities = Activity::with('images', 'staff')->get(); // Load staff data as well
+        $activities = Activity::with('images', 'staff')->get();
         return view('admin.activities.index', compact('activities'));
     }
-
 
     // Show the form for creating a new activity
     public function create()
@@ -31,26 +28,13 @@ class ActivityController extends Controller
         $this->authorize('create', Activity::class);
         $users = User::where('role', 'staff')->get();
         $projects = Project::all();
-        return view('admin.activities.create', compact(
-            'users',
-            'projects',
-        ));
+        return view('admin.activities.create', compact('users', 'projects'));
     }
 
     // Store a newly created activity in storage
     public function store(Request $request)
     {
         $this->authorize('create', Activity::class);
-
-        $request->validate([
-            'description' => 'nullable|string',
-            'activity_type' => 'nullable|string',
-            'activity_date' => 'nullable|string',
-            'user_ids' => 'nullable|array',
-            'user_ids.*' => 'exists:users,id',
-            'project_id' => 'nullable|exists:projects,id',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-        ]);
 
         $activity = Activity::create($request->except('images', 'user_ids'));
 
@@ -78,28 +62,13 @@ class ActivityController extends Controller
         $this->authorize('update', $activity);
         $users = User::where('role', 'staff')->get();
         $projects = Project::all();
-        return view('admin.activities.edit', compact(
-            'activity',
-            'users',
-            'projects',
-        ));
+        return view('admin.activities.edit', compact('activity', 'users', 'projects'));
     }
 
     // Update the specified activity in storage
-
     public function update(Request $request, Activity $activity)
     {
         $this->authorize('update', $activity);
-
-        $request->validate([
-            'description' => 'nullable|string',
-            'activity_type' => 'required|in:meeting,call,email,task,other',
-            'activity_date' => 'required|date',
-            'user_ids' => 'nullable|array',
-            'user_ids.*' => 'exists:users,id',
-            'project_id' => 'nullable|exists:projects,id',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
 
         $activity->update($request->except('images', 'user_ids'));
 
@@ -121,7 +90,6 @@ class ActivityController extends Controller
         return redirect()->route('activities.index')->with('success', 'Activity updated successfully.');
     }
 
-
     // Remove the specified activity from storage
     public function destroy(Activity $activity)
     {
@@ -133,7 +101,7 @@ class ActivityController extends Controller
 
         $activity->delete();
 
-        return redirect()->route('activities.index')->with('success', 'ActivityNotification deleted successfully.');
+        return redirect()->route('activities.index')->with('success', 'Activity deleted successfully.');
     }
 
     // Show the details of a specific activity

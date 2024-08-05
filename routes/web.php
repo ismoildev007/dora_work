@@ -51,7 +51,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('departments', DepartmentController::class);
     Route::resource('projects', ProjectController::class);
     Route::resource('staffs', StaffController::class);
-
     // Yangi routlar
 
     Route::resource('agreements', AgreementController::class);

@@ -8,80 +8,58 @@ use App\Models\Agreement;
 
 class TransactionController extends Controller
 {
-    public function index(Transaction $transaction)
+    public function index()
     {
-        $transactions = Transaction::with('agreement')->get(); // Agreement bilan birga olish
-        $agreements = Agreement::all(); // Create va Edit formalar uchun agreements
-        return view('admin.transactions.index', compact('transactions', 'agreements', 'transaction'));
+        $transactions = Transaction::with('agreement')->get();
+        $agreements = Agreement::all();
+        return view('admin.transactions.index', compact('transactions', 'agreements'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'agreement_id' => 'required|exists:agreements,id',
-            'profit' => 'required|numeric'
-        ]);
+        $transactionId = $request->input('id');
+        $newProfit = $request->input('profit');
+        $agreementId = $request->input('agreement_id');
 
-        $agreement = Agreement::find($request->agreement_id);
+        $agreement = Agreement::find($agreementId);
+        if (!$agreement) {
+            return redirect()->route('transactions.index')->with('error', 'Agreement not found.');
+        }
 
-        // Avvalgi barcha to'lovlarni olish
-        $totalProfit = Transaction::where('agreement_id', $request->agreement_id)->sum('profit');
+        if ($transactionId) {
+            $transaction = Transaction::find($transactionId);
+            if ($transaction) {
+                $newTotalProfit = $transaction->profit + $newProfit;
+                $newResidual = $agreement->price - $newTotalProfit;
 
-        // Yangi to'lovni qo'shish
-        $newTotalProfit = $totalProfit + $request->profit;
+                if ($newResidual < 0) {
+                    return redirect()->route('transactions.index')->with('error', 'Siz belgilangan qiymatdan ko`p miqdorda pul kirtitishingiz mumkin emas');
+                }
 
-        // Residualni hisoblash
-        $residual = $agreement->price - $newTotalProfit;
+                $transaction->profit = $newTotalProfit;
+                $transaction->residual = $newResidual;
+                $transaction->save();
+            }
+        } else {
+            $newResidual = $agreement->price - $newProfit;
 
-        // Mavjud transaksiyani topish yoki yangi yaratish
-        $transaction = Transaction::updateOrCreate(
-            ['agreement_id' => $request->agreement_id], // Shart: agar mavjud bo'lsa
-            [
-                'residual' => $residual,
-                'profit' => $newTotalProfit // Jami profitni yangilash
-            ]
-        );
+            if ($newResidual < 0) {
+                return redirect()->route('transactions.index')->with('error', 'Siz belgilangan qiymatdan ko`p miqdorda pul kirtitishingiz mumkin emas');
+            }
 
-        return redirect()->route('transactions.index')->with('success', 'Transaction updated successfully.');
+            $transaction = new Transaction();
+            $transaction->agreement_id = $agreementId;
+            $transaction->profit = $newProfit;
+            $transaction->residual = $newResidual;
+            $transaction->save();
+        }
+
+        return redirect()->route('transactions.index')->with('success', 'To`lov muvoffaqiyatli amalga oshirildi');
     }
-
-
-    public function edit($id)
-    {
-        $transaction = Transaction::with('agreement')->findOrFail($id);
-        return response()->json($transaction);
-    }
-
-
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'agreement_id' => 'required|exists:agreements,id',
-            'profit' => 'required|numeric'
-        ]);
-
-        $transaction = Transaction::find($id);
-        $transaction->agreement_id = $request->agreement_id;
-        $transaction->profit = $request->profit;
-
-        $agreement = Agreement::find($request->agreement_id);
-
-        // Avvalgi barcha to'lovlarni olish (shu jumladan yangilayotgan to'lovni ham)
-        $totalProfit = Transaction::where('agreement_id', $request->agreement_id)->sum('profit');
-
-        // Residualni hisoblash
-        $residual = $agreement->price - $totalProfit;
-
-        $transaction->residual = $residual;
-        $transaction->save();
-
-        return redirect()->route('transactions.index')->with('success', 'Transaction updated successfully.');
-    }
-
 
     public function destroy(Transaction $transaction)
     {
         $transaction->delete();
-        return redirect()->route('transactions.index')->with('success', 'Transaction deleted successfully.');
+        return redirect()->route('transactions.index')->with('success', 'To`lov muvoffaqiyatli amalga oshirildi');
     }
 }

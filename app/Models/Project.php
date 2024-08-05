@@ -14,14 +14,13 @@ class Project extends Model
         'end_date',
         'project_status',
         'payment_status',
-        'agreement_id',
         'client_id',
         'manager_id',
     ];
 
-    public function agreement()
+    public function agreements()
     {
-        return $this->belongsTo(Agreement::class);
+        return $this->hasMany(Agreement::class);
     }
 
     // Relationship with Client (inverse one-to-many)

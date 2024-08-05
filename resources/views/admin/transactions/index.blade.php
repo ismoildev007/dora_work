@@ -3,6 +3,21 @@
 @section('content')
     <div class="container">
         <h1>Transactions</h1>
+
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         <table class="table table-striped mt-3">
             <thead>
             <tr>
@@ -22,14 +37,17 @@
                     <td>{{ $transaction->profit }}</td>
                     <td>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editTransactionModal"
-                                data-id="{{ $transaction->id }}">
-                            Edit
+                                data-id="{{ $transaction->id }}"
+                                data-agreement-id="{{ $transaction->agreement_id }}"
+                                data-profit="{{ $transaction->profit }}"
+                                {{ $transaction->residual == 0 ? 'disabled' : '' }}>
+                            To'lov qilish
                         </button>
-                        <form action="{{ route('transactions.destroy', $transaction->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
+{{--                        <form action="{{ route('transactions.destroy', $transaction->id) }}" method="POST" class="d-inline">--}}
+{{--                            @csrf--}}
+{{--                            @method('DELETE')--}}
+{{--                            <button type="submit" class="btn btn-danger">Delete</button>--}}
+{{--                        </form>--}}
                     </td>
                 </tr>
             @endforeach
@@ -46,18 +64,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editTransactionForm" action="{{ route('transactions.update', 'transaction_id_placeholder') }}" method="POST">
+                    <form id="editTransactionForm" action="{{ route('transactions.store') }}" method="POST">
                         @csrf
-                        @method('PUT')
                         <input type="hidden" name="id" id="edit_id">
-                        <div class="form-group">
-                            <label for="edit_agreement_name">Agreement</label>
-                            <input type="text" name="agreement_name" id="edit_agreement_name" class="form-control" readonly>
-                            <input type="hidden" name="agreement_id" id="edit_agreement_id">
-                        </div>
+                        <input type="hidden" name="agreement_id" id="edit_agreement_id">
                         <div class="form-group">
                             <label for="edit_profit">Profit</label>
-                            <input type="number" name="profit"  class="form-control" step="0.01" required>
+                            <input type="number" name="profit" id="edit_profit" class="form-control" step="0.01" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
@@ -67,25 +80,20 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const editTransactionModal = document.getElementById('editTransactionModal');
-            editTransactionModal.addEventListener('show.bs.modal', function (event) {
-                const button = event.relatedTarget;
-                const transactionId = button.getAttribute('data-id');
+        const editTransactionModal = document.getElementById('editTransactionModal');
+        editTransactionModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-id');
+            const agreementId = button.getAttribute('data-agreement-id');
+            const profit = button.getAttribute('data-profit');
 
-                fetch(`/transactions/${transactionId}/edit`)
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('edit_id').value = data.id;
-                        document.getElementById('edit_agreement_name').value = data.agreement.service_name;
-                        document.getElementById('edit_agreement_id').value = data.agreement.id;
-                        document.getElementById('edit_profit').value = data.profit;
+            const idInput = editTransactionModal.querySelector('#edit_id');
+            const agreementInput = editTransactionModal.querySelector('#edit_agreement_id');
+            const profitInput = editTransactionModal.querySelector('#edit_profit');
 
-                        const form = document.getElementById('editTransactionForm');
-                        form.action = form.action.replace('transaction_id_placeholder', data.id);
-                    })
-                    .catch(error => console.error('Error fetching transaction data:', error));
-            });
+            idInput.value = id;
+            agreementInput.value = agreementId;
+            profitInput.value = '';
         });
     </script>
 @endsection

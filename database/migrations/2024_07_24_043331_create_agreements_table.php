@@ -13,11 +13,17 @@ return new class extends Migration
     {
         Schema::create('agreements', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('project_id'); // Bu yerda project_id mavjud bo'lishi kerak
+
             $table->string('contract');
             $table->decimal('price', 10, 2);
             $table->string('service_name');
             $table->enum('service_type', ['monthly', 'unit']);
             $table->timestamps();
+
+
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+
         });
     }
 
